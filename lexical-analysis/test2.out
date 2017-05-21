@@ -1,0 +1,259 @@
+Plik: ./Scaner
+----------------------------------------
+KEYWORD("program")
+OPER_SEMICOLON
+Line: 0
+
+KEYWORD("var")
+ID("x")
+OPER_COLON
+KEYWORD("int")
+Line: 1
+
+KEYWORD("var")
+ID("h")
+OPER_COLON
+KEYWORD("string")
+Line: 2
+
+KEYWORD("var")
+ID("y")
+OPER_COLON
+KEYWORD("int")
+Line: 3
+
+Line: 4
+
+KEYWORD("function")
+ID("ileLisci")
+OPER_BRACKET
+KEYWORD("var")
+ID("t")
+OPER_COLON
+ID("tree")
+OPER_BRACKET
+OPER_COLON
+KEYWORD("int")
+Line: 5
+
+OPER_BRACE
+Line: 6
+
+KEYWORD("if")
+ID("t")
+OPER_REL
+KEYWORD("null")
+Line: 7
+
+KEYWORD("then")
+Line: 8
+
+Line: 10
+
+ID("result")
+OPER_ASSIGN
+INT(0)
+OPER_SEMICOLON
+Line: 11
+
+KEYWORD("else")
+Line: 12
+
+ID("result")
+OPER_ASSIGN
+ID("ileLisci")
+OPER_BRACKET
+ID("t")
+OPER_DOT
+ID("left")
+OPER_BRACKET
+OPER_ADDITIVE
+ID("ileLisci")
+OPER_BRACKET
+ID("t")
+OPER_DOT
+ID("right")
+OPER_BRACKET
+OPER_SEMICOLON
+Line: 13
+
+KEYWORD("endif")
+OPER_SEMICOLON
+Line: 14
+
+error(line:15): illegal char: #
+Line: 15
+
+OPER_BRACE
+Line: 16
+
+KEYWORD("function")
+ID("silnia")
+OPER_BRACKET
+KEYWORD("var")
+ID("liczba")
+OPER_COLON
+KEYWORD("int")
+OPER_BRACKET
+OPER_COLON
+KEYWORD("int")
+Line: 17
+
+OPER_BRACE
+Line: 18
+
+error(line:19): illegal char: $
+Line: 19
+
+KEYWORD("if")
+ID("liczba")
+OPER_REL
+INT(0)
+Line: 20
+
+KEYWORD("then")
+Line: 21
+
+ID("result")
+OPER_ASSIGN
+ID("silnia")
+OPER_BRACKET
+ID("liczba")
+OPER_BRACKET
+OPER_MULTIPLICATIVE
+OPER_BRACKET
+ID("liczba")
+OPER_ADDITIVE
+INT(1)
+OPER_BRACKET
+OPER_SEMICOLON
+Line: 22
+
+KEYWORD("else")
+Line: 23
+
+ID("result")
+OPER_ASSIGN
+INT(1)
+OPER_SEMICOLON
+Line: 24
+
+KEYWORD("endif")
+OPER_SEMICOLON
+error(line:25): illegal char: ^
+Line: 25
+
+OPER_BRACE
+Line: 26
+
+KEYWORD("function")
+ID("dodatnie")
+OPER_BRACKET
+KEYWORD("var")
+ID("liczba")
+OPER_COLON
+KEYWORD("int")
+OPER_BRACKET
+OPER_COLON
+Line: 27
+
+OPER_BRACE
+Line: 28
+
+KEYWORD("if")
+ID("liczba")
+OPER_REL
+INT(0)
+Line: 29
+
+KEYWORD("then")
+Line: 30
+
+ID("result")
+OPER_ASSIGN
+ID("true")
+OPER_SEMICOLON
+Line: 31
+
+KEYWORD("else")
+Line: 32
+
+ID("result")
+OPER_ASSIGN
+ID("false")
+OPER_SEMICOLON
+Line: 33
+
+KEYWORD("endif")
+OPER_SEMICOLON
+Line: 34
+
+OPER_BRACE
+Line: 35
+
+KEYWORD("function")
+ID("square")
+OPER_BRACKET
+KEYWORD("var")
+ID("liczba")
+OPER_COLON
+KEYWORD("int")
+OPER_BRACKET
+OPER_COLON
+KEYWORD("int")
+Line: 36
+
+OPER_BRACE
+Line: 37
+
+ID("result")
+OPER_ASSIGN
+ID("liczba")
+OPER_MULTIPLICATIVE
+ID("liczba")
+OPER_SEMICOLON
+Line: 38
+
+OPER_BRACE
+Line: 39
+
+KEYWORD("function")
+ID("cube")
+OPER_BRACKET
+KEYWORD("var")
+ID("liczba")
+OPER_COLON
+KEYWORD("int")
+OPER_BRACKET
+OPER_COLON
+KEYWORD("int")
+Line: 40
+
+OPER_BRACE
+Line: 41
+
+ID("result")
+OPER_ASSIGN
+ID("liczba")
+OPER_MULTIPLICATIVE
+ID("liczba")
+OPER_MULTIPLICATIVE
+OPER_SEMICOLON
+Line: 42
+
+OPER_BRACE
+Line: 43
+
+OPER_BRACE
+Line: 44
+
+ID("x")
+OPER_ASSIGN
+OPER_UNARNY
+INT(50)
+OPER_SEMICOLON
+Line: 45
+
+ID("a")
+OPER_ASSIGN
+EOF

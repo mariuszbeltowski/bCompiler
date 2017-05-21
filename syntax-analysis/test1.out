@@ -1,0 +1,1014 @@
+token: program
+token: ;
+Line: 0
+
+token: var
+token: ID ("x")
+Ident -> Identyfikator 
+token: :
+token: int
+Typ -> int 
+DeklaracjaZmiennej -> var Ident : Typ 
+Deklaracja -> DeklaracjaZmiennej 
+Line: 1
+
+token: var
+token: ID ("h")
+Ident -> Identyfikator 
+token: :
+token: string
+Typ -> string 
+DeklaracjaZmiennej -> var Ident : Typ 
+Deklaracja -> DeklaracjaZmiennej 
+Line: 2
+
+token: var
+token: ID ("y")
+Ident -> Identyfikator 
+token: :
+token: int
+Typ -> int 
+DeklaracjaZmiennej -> var Ident : Typ 
+Deklaracja -> DeklaracjaZmiennej 
+Line: 3
+
+token: var
+token: ID ("tmp")
+Ident -> Identyfikator 
+token: :
+token: int
+Typ -> int 
+DeklaracjaZmiennej -> var Ident : Typ 
+Deklaracja -> DeklaracjaZmiennej 
+Line: 4
+
+Line: 5
+
+token: function
+token: ID ("ileLisci")
+Ident -> Identyfikator 
+token: (
+token: var
+token: ID ("t")
+Ident -> Identyfikator 
+token: :
+token: ID ("tree")
+Ident -> Identyfikator 
+Typ -> Ident 
+DeklaracjaZmiennej -> var Ident : Typ 
+token: )
+ListaDeklaracjiZmiennej -> DeklaracjaZmiennej 
+DeklaracjaArgumentow -> ListaDeklaracjiZmiennej 
+token: :
+token: int
+Typ -> int 
+Line: 6
+
+token: {
+ListaDeklaracji -> slowo puste 
+Line: 7
+
+token: if
+token: ID ("t")
+Ident -> Identyfikator 
+WyrazeniePodstawowe -> Ident 
+WyrazeniePostfiksowe -> WyrazeniePodstawowe 
+token: ==
+WyrazenieUnarne -> WyrazeniePostfiksowe 
+ WyrazenieMultiplikatywne -> WyrazenieUnarne 
+WyrazenieAddytywne -> WyrazenieMultiplikatywne 
+OperatorPorownania -> == 
+token: null
+WyrazeniePodstawowe -> null 
+WyrazeniePostfiksowe -> WyrazeniePodstawowe 
+Line: 8
+
+token: then
+WyrazenieUnarne -> WyrazeniePostfiksowe 
+ WyrazenieMultiplikatywne -> WyrazenieUnarne 
+WyrazenieAddytywne -> WyrazenieMultiplikatywne 
+WyrazeniePorownania -> Wyrazenieaddytywne OperatorPorownania WyrazenieAddytywne 
+Wyrazenielogiczne -> WyrazeniePorownania 
+Wyrazenie -> Wyrazenielogiczne 
+Line: 9
+
+Line: 11
+
+token: ID ("result")
+Ident -> Identyfikator 
+WyrazeniePodstawowe -> Ident 
+WyrazeniePostfiksowe -> WyrazeniePodstawowe 
+token: :=
+token: INT_VAL (0)
+WyrazeniePodstawowe -> INT_VAL 
+WyrazeniePostfiksowe -> WyrazeniePodstawowe 
+token: ;
+WyrazenieUnarne -> WyrazeniePostfiksowe 
+ WyrazenieMultiplikatywne -> WyrazenieUnarne 
+WyrazenieAddytywne -> WyrazenieMultiplikatywne 
+WyrazeniePorownania -> WyrazenieAddytywne 
+Wyrazenielogiczne -> WyrazeniePorownania 
+Wyrazenie -> Wyrazenielogiczne 
+Instrukcja -> WyrazeniePostfiksowe := Wyrazenie ; 
+Line: 12
+
+token: else
+ListaInstrukcji -> Slowo puste 
+ListaInstrukcji -> Instrukcja ListaInstrukcji 
+Line: 13
+
+token: ID ("result")
+Ident -> Identyfikator 
+WyrazeniePodstawowe -> Ident 
+WyrazeniePostfiksowe -> WyrazeniePodstawowe 
+token: :=
+token: ID ("ileLisci")
+Ident -> Identyfikator 
+WyrazeniePodstawowe -> Ident 
+WyrazeniePostfiksowe -> WyrazeniePodstawowe 
+token: (
+token: ID ("t")
+Ident -> Identyfikator 
+WyrazeniePodstawowe -> Ident 
+WyrazeniePostfiksowe -> WyrazeniePodstawowe 
+token: .
+token: ID ("left")
+Ident -> Identyfikator 
+WyrazeniePostfiksowe -> WyrazeniePostfiksowe . Ident 
+token: )
+WyrazenieUnarne -> WyrazeniePostfiksowe 
+ WyrazenieMultiplikatywne -> WyrazenieUnarne 
+WyrazenieAddytywne -> WyrazenieMultiplikatywne 
+WyrazeniePorownania -> WyrazenieAddytywne 
+Wyrazenielogiczne -> WyrazeniePorownania 
+Wyrazenie -> Wyrazenielogiczne 
+ListaWyrazen -> Wyrazenie 
+Parametry -> ListaWyrazen 
+WyrazeniePostfiksowe -> WyrazeniePostfiksowe (Parametry) 
+token: +
+WyrazenieUnarne -> WyrazeniePostfiksowe 
+ WyrazenieMultiplikatywne -> WyrazenieUnarne 
+WyrazenieAddytywne -> WyrazenieMultiplikatywne 
+OperatorAddytywny -> + 
+token: ID ("ileLisci")
+Ident -> Identyfikator 
+WyrazeniePodstawowe -> Ident 
+WyrazeniePostfiksowe -> WyrazeniePodstawowe 
+token: (
+token: ID ("t")
+Ident -> Identyfikator 
+WyrazeniePodstawowe -> Ident 
+WyrazeniePostfiksowe -> WyrazeniePodstawowe 
+token: .
+token: ID ("right")
+Ident -> Identyfikator 
+WyrazeniePostfiksowe -> WyrazeniePostfiksowe . Ident 
+token: )
+WyrazenieUnarne -> WyrazeniePostfiksowe 
+ WyrazenieMultiplikatywne -> WyrazenieUnarne 
+WyrazenieAddytywne -> WyrazenieMultiplikatywne 
+WyrazeniePorownania -> WyrazenieAddytywne 
+Wyrazenielogiczne -> WyrazeniePorownania 
+Wyrazenie -> Wyrazenielogiczne 
+ListaWyrazen -> Wyrazenie 
+Parametry -> ListaWyrazen 
+WyrazeniePostfiksowe -> WyrazeniePostfiksowe (Parametry) 
+token: ;
+WyrazenieUnarne -> WyrazeniePostfiksowe 
+ WyrazenieMultiplikatywne -> WyrazenieUnarne 
+WyrazenieAddytywne -> WyrazenieAddytywne OperatorAddytywny WyrazenieMultiplikatywne 
+WyrazeniePorownania -> WyrazenieAddytywne 
+Wyrazenielogiczne -> WyrazeniePorownania 
+Wyrazenie -> Wyrazenielogiczne 
+Instrukcja -> WyrazeniePostfiksowe := Wyrazenie ; 
+Line: 14
+
+token: endif
+ListaInstrukcji -> Slowo puste 
+ListaInstrukcji -> Instrukcja ListaInstrukcji 
+ZlozonaInstrukcja -> if Wyrazenie then ListaInstrukcji else ListaInstrukcji endif 
+token: ;
+Instrukcja -> ZlozonaInstrukcja ; 
+Line: 15
+
+token: }
+ListaInstrukcji -> Slowo puste 
+ListaInstrukcji -> Instrukcja ListaInstrukcji 
+Blok -> { ListaInstrukcji } 
+Cialo -> ListaDeklaracji Blok 
+DeklaracjaFunkcji -> function Ident ( DeklaracjaArgumentow ) : Typ Cialo 
+Deklaracja -> DeklaracjaFunkcji 
+Line: 16
+
+token: function
+token: ID ("silnia")
+Ident -> Identyfikator 
+token: (
+token: var
+token: ID ("liczba")
+Ident -> Identyfikator 
+token: :
+token: int
+Typ -> int 
+DeklaracjaZmiennej -> var Ident : Typ 
+token: )
+ListaDeklaracjiZmiennej -> DeklaracjaZmiennej 
+DeklaracjaArgumentow -> ListaDeklaracjiZmiennej 
+token: :
+token: int
+Typ -> int 
+Line: 17
+
+token: {
+ListaDeklaracji -> slowo puste 
+Line: 18
+
+token: if
+token: ID ("liczba")
+Ident -> Identyfikator 
+WyrazeniePodstawowe -> Ident 
+WyrazeniePostfiksowe -> WyrazeniePodstawowe 
+token: >
+WyrazenieUnarne -> WyrazeniePostfiksowe 
+ WyrazenieMultiplikatywne -> WyrazenieUnarne 
+WyrazenieAddytywne -> WyrazenieMultiplikatywne 
+OperatorPorownania -> > 
+token: INT_VAL (0)
+WyrazeniePodstawowe -> INT_VAL 
+WyrazeniePostfiksowe -> WyrazeniePodstawowe 
+Line: 19
+
+token: then
+WyrazenieUnarne -> WyrazeniePostfiksowe 
+ WyrazenieMultiplikatywne -> WyrazenieUnarne 
+WyrazenieAddytywne -> WyrazenieMultiplikatywne 
+WyrazeniePorownania -> Wyrazenieaddytywne OperatorPorownania WyrazenieAddytywne 
+Wyrazenielogiczne -> WyrazeniePorownania 
+Wyrazenie -> Wyrazenielogiczne 
+Line: 20
+
+token: ID ("result")
+Ident -> Identyfikator 
+WyrazeniePodstawowe -> Ident 
+WyrazeniePostfiksowe -> WyrazeniePodstawowe 
+token: :=
+token: ID ("silnia")
+Ident -> Identyfikator 
+WyrazeniePodstawowe -> Ident 
+WyrazeniePostfiksowe -> WyrazeniePodstawowe 
+token: (
+token: ID ("liczba")
+Ident -> Identyfikator 
+WyrazeniePodstawowe -> Ident 
+WyrazeniePostfiksowe -> WyrazeniePodstawowe 
+token: )
+WyrazenieUnarne -> WyrazeniePostfiksowe 
+ WyrazenieMultiplikatywne -> WyrazenieUnarne 
+WyrazenieAddytywne -> WyrazenieMultiplikatywne 
+WyrazeniePorownania -> WyrazenieAddytywne 
+Wyrazenielogiczne -> WyrazeniePorownania 
+Wyrazenie -> Wyrazenielogiczne 
+ListaWyrazen -> Wyrazenie 
+Parametry -> ListaWyrazen 
+WyrazeniePostfiksowe -> WyrazeniePostfiksowe (Parametry) 
+token: *
+WyrazenieUnarne -> WyrazeniePostfiksowe 
+ WyrazenieMultiplikatywne -> WyrazenieUnarne 
+OperatorMultiplikatywny -> * 
+token: (
+token: ID ("liczba")
+Ident -> Identyfikator 
+WyrazeniePodstawowe -> Ident 
+WyrazeniePostfiksowe -> WyrazeniePodstawowe 
+token: -
+WyrazenieUnarne -> WyrazeniePostfiksowe 
+ WyrazenieMultiplikatywne -> WyrazenieUnarne 
+WyrazenieAddytywne -> WyrazenieMultiplikatywne 
+OperatorAddytywny -> - 
+token: INT_VAL (1)
+WyrazeniePodstawowe -> INT_VAL 
+WyrazeniePostfiksowe -> WyrazeniePodstawowe 
+token: )
+WyrazenieUnarne -> WyrazeniePostfiksowe 
+ WyrazenieMultiplikatywne -> WyrazenieUnarne 
+WyrazenieAddytywne -> WyrazenieAddytywne OperatorAddytywny WyrazenieMultiplikatywne 
+WyrazeniePorownania -> WyrazenieAddytywne 
+Wyrazenielogiczne -> WyrazeniePorownania 
+Wyrazenie -> Wyrazenielogiczne 
+WyrazeniePodstawowe -> (Wyrazenie) 
+WyrazeniePostfiksowe -> WyrazeniePodstawowe 
+token: ;
+WyrazenieUnarne -> WyrazeniePostfiksowe 
+WyrazenieMultiplikatywne -> WyrazenieMultiplikatywne OperatorMultiplikatywny WyrazenieUnarne 
+WyrazenieAddytywne -> WyrazenieMultiplikatywne 
+WyrazeniePorownania -> WyrazenieAddytywne 
+Wyrazenielogiczne -> WyrazeniePorownania 
+Wyrazenie -> Wyrazenielogiczne 
+Instrukcja -> WyrazeniePostfiksowe := Wyrazenie ; 
+Line: 21
+
+token: else
+ListaInstrukcji -> Slowo puste 
+ListaInstrukcji -> Instrukcja ListaInstrukcji 
+Line: 22
+
+token: ID ("result")
+Ident -> Identyfikator 
+WyrazeniePodstawowe -> Ident 
+WyrazeniePostfiksowe -> WyrazeniePodstawowe 
+token: :=
+token: INT_VAL (1)
+WyrazeniePodstawowe -> INT_VAL 
+WyrazeniePostfiksowe -> WyrazeniePodstawowe 
+token: ;
+WyrazenieUnarne -> WyrazeniePostfiksowe 
+ WyrazenieMultiplikatywne -> WyrazenieUnarne 
+WyrazenieAddytywne -> WyrazenieMultiplikatywne 
+WyrazeniePorownania -> WyrazenieAddytywne 
+Wyrazenielogiczne -> WyrazeniePorownania 
+Wyrazenie -> Wyrazenielogiczne 
+Instrukcja -> WyrazeniePostfiksowe := Wyrazenie ; 
+Line: 23
+
+token: endif
+ListaInstrukcji -> Slowo puste 
+ListaInstrukcji -> Instrukcja ListaInstrukcji 
+ZlozonaInstrukcja -> if Wyrazenie then ListaInstrukcji else ListaInstrukcji endif 
+token: ;
+Instrukcja -> ZlozonaInstrukcja ; 
+Line: 24
+
+Line: 25
+
+token: return
+token: ID ("result")
+Ident -> Identyfikator 
+WyrazeniePodstawowe -> Ident 
+WyrazeniePostfiksowe -> WyrazeniePodstawowe 
+token: ;
+WyrazenieUnarne -> WyrazeniePostfiksowe 
+ WyrazenieMultiplikatywne -> WyrazenieUnarne 
+WyrazenieAddytywne -> WyrazenieMultiplikatywne 
+WyrazeniePorownania -> WyrazenieAddytywne 
+Wyrazenielogiczne -> WyrazeniePorownania 
+Wyrazenie -> Wyrazenielogiczne 
+Instrukcja -> return Wyrazenie ; 
+Line: 26
+
+token: }
+ListaInstrukcji -> Slowo puste 
+ListaInstrukcji -> Instrukcja ListaInstrukcji 
+ListaInstrukcji -> Instrukcja ListaInstrukcji 
+Blok -> { ListaInstrukcji } 
+Cialo -> ListaDeklaracji Blok 
+DeklaracjaFunkcji -> function Ident ( DeklaracjaArgumentow ) : Typ Cialo 
+Deklaracja -> DeklaracjaFunkcji 
+Line: 27
+
+token: function
+token: ID ("dodatnie")
+Ident -> Identyfikator 
+token: (
+token: var
+token: ID ("liczba")
+Ident -> Identyfikator 
+token: :
+token: int
+Typ -> int 
+DeklaracjaZmiennej -> var Ident : Typ 
+token: )
+ListaDeklaracjiZmiennej -> DeklaracjaZmiennej 
+DeklaracjaArgumentow -> ListaDeklaracjiZmiennej 
+token: :
+token: ID ("bool")
+Ident -> Identyfikator 
+Typ -> Ident 
+Line: 28
+
+token: {
+ListaDeklaracji -> slowo puste 
+Line: 29
+
+token: if
+token: ID ("liczba")
+Ident -> Identyfikator 
+WyrazeniePodstawowe -> Ident 
+WyrazeniePostfiksowe -> WyrazeniePodstawowe 
+token: >
+WyrazenieUnarne -> WyrazeniePostfiksowe 
+ WyrazenieMultiplikatywne -> WyrazenieUnarne 
+WyrazenieAddytywne -> WyrazenieMultiplikatywne 
+OperatorPorownania -> > 
+token: INT_VAL (0)
+WyrazeniePodstawowe -> INT_VAL 
+WyrazeniePostfiksowe -> WyrazeniePodstawowe 
+Line: 30
+
+token: then
+WyrazenieUnarne -> WyrazeniePostfiksowe 
+ WyrazenieMultiplikatywne -> WyrazenieUnarne 
+WyrazenieAddytywne -> WyrazenieMultiplikatywne 
+WyrazeniePorownania -> Wyrazenieaddytywne OperatorPorownania WyrazenieAddytywne 
+Wyrazenielogiczne -> WyrazeniePorownania 
+Wyrazenie -> Wyrazenielogiczne 
+Line: 31
+
+token: return
+token: ID ("true")
+Ident -> Identyfikator 
+WyrazeniePodstawowe -> Ident 
+WyrazeniePostfiksowe -> WyrazeniePodstawowe 
+token: ;
+WyrazenieUnarne -> WyrazeniePostfiksowe 
+ WyrazenieMultiplikatywne -> WyrazenieUnarne 
+WyrazenieAddytywne -> WyrazenieMultiplikatywne 
+WyrazeniePorownania -> WyrazenieAddytywne 
+Wyrazenielogiczne -> WyrazeniePorownania 
+Wyrazenie -> Wyrazenielogiczne 
+Instrukcja -> return Wyrazenie ; 
+Line: 32
+
+token: else
+ListaInstrukcji -> Slowo puste 
+ListaInstrukcji -> Instrukcja ListaInstrukcji 
+Line: 33
+
+token: return
+token: ID ("false")
+Ident -> Identyfikator 
+WyrazeniePodstawowe -> Ident 
+WyrazeniePostfiksowe -> WyrazeniePodstawowe 
+token: ;
+WyrazenieUnarne -> WyrazeniePostfiksowe 
+ WyrazenieMultiplikatywne -> WyrazenieUnarne 
+WyrazenieAddytywne -> WyrazenieMultiplikatywne 
+WyrazeniePorownania -> WyrazenieAddytywne 
+Wyrazenielogiczne -> WyrazeniePorownania 
+Wyrazenie -> Wyrazenielogiczne 
+Instrukcja -> return Wyrazenie ; 
+Line: 34
+
+token: endif
+ListaInstrukcji -> Slowo puste 
+ListaInstrukcji -> Instrukcja ListaInstrukcji 
+ZlozonaInstrukcja -> if Wyrazenie then ListaInstrukcji else ListaInstrukcji endif 
+token: ;
+Instrukcja -> ZlozonaInstrukcja ; 
+Line: 35
+
+token: }
+ListaInstrukcji -> Slowo puste 
+ListaInstrukcji -> Instrukcja ListaInstrukcji 
+Blok -> { ListaInstrukcji } 
+Cialo -> ListaDeklaracji Blok 
+DeklaracjaFunkcji -> function Ident ( DeklaracjaArgumentow ) : Typ Cialo 
+Deklaracja -> DeklaracjaFunkcji 
+Line: 36
+
+token: function
+token: ID ("square")
+Ident -> Identyfikator 
+token: (
+token: var
+token: ID ("liczba")
+Ident -> Identyfikator 
+token: :
+token: int
+Typ -> int 
+DeklaracjaZmiennej -> var Ident : Typ 
+token: )
+ListaDeklaracjiZmiennej -> DeklaracjaZmiennej 
+DeklaracjaArgumentow -> ListaDeklaracjiZmiennej 
+token: :
+token: int
+Typ -> int 
+Line: 37
+
+token: {
+ListaDeklaracji -> slowo puste 
+Line: 38
+
+token: return
+token: ID ("liczba")
+Ident -> Identyfikator 
+WyrazeniePodstawowe -> Ident 
+WyrazeniePostfiksowe -> WyrazeniePodstawowe 
+token: *
+WyrazenieUnarne -> WyrazeniePostfiksowe 
+ WyrazenieMultiplikatywne -> WyrazenieUnarne 
+OperatorMultiplikatywny -> * 
+token: ID ("liczba")
+Ident -> Identyfikator 
+WyrazeniePodstawowe -> Ident 
+WyrazeniePostfiksowe -> WyrazeniePodstawowe 
+token: ;
+WyrazenieUnarne -> WyrazeniePostfiksowe 
+WyrazenieMultiplikatywne -> WyrazenieMultiplikatywne OperatorMultiplikatywny WyrazenieUnarne 
+WyrazenieAddytywne -> WyrazenieMultiplikatywne 
+WyrazeniePorownania -> WyrazenieAddytywne 
+Wyrazenielogiczne -> WyrazeniePorownania 
+Wyrazenie -> Wyrazenielogiczne 
+Instrukcja -> return Wyrazenie ; 
+Line: 39
+
+token: }
+ListaInstrukcji -> Slowo puste 
+ListaInstrukcji -> Instrukcja ListaInstrukcji 
+Blok -> { ListaInstrukcji } 
+Cialo -> ListaDeklaracji Blok 
+DeklaracjaFunkcji -> function Ident ( DeklaracjaArgumentow ) : Typ Cialo 
+Deklaracja -> DeklaracjaFunkcji 
+Line: 40
+
+token: class
+token: ID ("Kotek")
+Ident -> Identyfikator 
+token: extends
+token: ID ("Zwierze")
+Ident -> Identyfikator 
+token: {
+Line: 41
+
+token: var
+token: ID ("nazwa")
+Ident -> Identyfikator 
+token: :
+token: string
+Typ -> string 
+DeklaracjaZmiennej -> var Ident : Typ 
+Deklaracja -> DeklaracjaZmiennej 
+Line: 42
+
+token: type
+token: ID ("TablicaSzczepien")
+Ident -> Identyfikator 
+token: =
+token: array
+token: of
+token: string
+Typ -> string 
+OpisTypu -> array of Typ 
+DeklaracjaTypu -> Type Ident = OpisTypu 
+Deklaracja -> DeklaracjaTypu 
+Line: 43
+
+token: type
+token: ID ("Test")
+Ident -> Identyfikator 
+token: =
+token: {
+Line: 44
+
+token: var
+token: ID ("x")
+Ident -> Identyfikator 
+token: :
+token: string
+Typ -> string 
+DeklaracjaZmiennej -> var Ident : Typ 
+token: ,
+Line: 45
+
+token: var
+token: ID ("y")
+Ident -> Identyfikator 
+token: :
+token: int
+Typ -> int 
+DeklaracjaZmiennej -> var Ident : Typ 
+Line: 46
+
+token: }
+ListaDeklaracjiZmiennej -> DeklaracjaZmiennej 
+ListaDeklaracjiZmiennej -> DeklaracjaZmiennej , ListaDeklaracjiZmiennej 
+OpisTypu -> { ListaDeklaracjiZmiennej } 
+DeklaracjaTypu -> Type Ident = OpisTypu 
+Deklaracja -> DeklaracjaTypu 
+Line: 47
+
+token: var
+token: ID ("szczepienia")
+Ident -> Identyfikator 
+token: :
+token: ID ("TablicaSzczepien")
+Ident -> Identyfikator 
+Typ -> Ident 
+DeklaracjaZmiennej -> var Ident : Typ 
+Deklaracja -> DeklaracjaZmiennej 
+Line: 48
+
+token: function
+token: ID ("obliczWiekLudzki")
+Ident -> Identyfikator 
+token: (
+token: )
+DeklaracjaArgumentow -> Slowo puste 
+token: :
+token: int
+Typ -> int 
+Line: 49
+
+token: {
+ListaDeklaracji -> slowo puste 
+Line: 50
+
+token: ID ("result")
+Ident -> Identyfikator 
+WyrazeniePodstawowe -> Ident 
+WyrazeniePostfiksowe -> WyrazeniePodstawowe 
+token: :=
+token: INT_VAL (3)
+WyrazeniePodstawowe -> INT_VAL 
+WyrazeniePostfiksowe -> WyrazeniePodstawowe 
+token: *
+WyrazenieUnarne -> WyrazeniePostfiksowe 
+ WyrazenieMultiplikatywne -> WyrazenieUnarne 
+OperatorMultiplikatywny -> * 
+token: super
+WyrazeniePodstawowe -> super 
+WyrazeniePostfiksowe -> WyrazeniePodstawowe 
+token: .
+token: ID ("wiek")
+Ident -> Identyfikator 
+WyrazeniePostfiksowe -> WyrazeniePostfiksowe . Ident 
+token: ;
+WyrazenieUnarne -> WyrazeniePostfiksowe 
+WyrazenieMultiplikatywne -> WyrazenieMultiplikatywne OperatorMultiplikatywny WyrazenieUnarne 
+WyrazenieAddytywne -> WyrazenieMultiplikatywne 
+WyrazeniePorownania -> WyrazenieAddytywne 
+Wyrazenielogiczne -> WyrazeniePorownania 
+Wyrazenie -> Wyrazenielogiczne 
+Instrukcja -> WyrazeniePostfiksowe := Wyrazenie ; 
+Line: 51
+
+token: write
+token: ID ("result")
+Ident -> Identyfikator 
+WyrazeniePodstawowe -> Ident 
+WyrazeniePostfiksowe -> WyrazeniePodstawowe 
+token: ;
+WyrazenieUnarne -> WyrazeniePostfiksowe 
+ WyrazenieMultiplikatywne -> WyrazenieUnarne 
+WyrazenieAddytywne -> WyrazenieMultiplikatywne 
+WyrazeniePorownania -> WyrazenieAddytywne 
+Wyrazenielogiczne -> WyrazeniePorownania 
+Wyrazenie -> Wyrazenielogiczne 
+Instrukcja -> write Wyrazenie ; 
+Line: 52
+
+token: return
+token: ID ("result")
+Ident -> Identyfikator 
+WyrazeniePodstawowe -> Ident 
+WyrazeniePostfiksowe -> WyrazeniePodstawowe 
+token: ;
+WyrazenieUnarne -> WyrazeniePostfiksowe 
+ WyrazenieMultiplikatywne -> WyrazenieUnarne 
+WyrazenieAddytywne -> WyrazenieMultiplikatywne 
+WyrazeniePorownania -> WyrazenieAddytywne 
+Wyrazenielogiczne -> WyrazeniePorownania 
+Wyrazenie -> Wyrazenielogiczne 
+Instrukcja -> return Wyrazenie ; 
+Line: 53
+
+token: }
+ListaInstrukcji -> Slowo puste 
+ListaInstrukcji -> Instrukcja ListaInstrukcji 
+ListaInstrukcji -> Instrukcja ListaInstrukcji 
+ListaInstrukcji -> Instrukcja ListaInstrukcji 
+Blok -> { ListaInstrukcji } 
+Cialo -> ListaDeklaracji Blok 
+DeklaracjaFunkcji -> function Ident ( DeklaracjaArgumentow ) : Typ Cialo 
+Deklaracja -> DeklaracjaFunkcji 
+Line: 54
+
+token: }
+ListaDeklaracji -> slowo puste 
+ListaDeklaracji -> Deklaracja ListaDeklaracji 
+ListaDeklaracji -> Deklaracja ListaDeklaracji 
+ListaDeklaracji -> Deklaracja ListaDeklaracji 
+ListaDeklaracji -> Deklaracja ListaDeklaracji 
+ListaDeklaracji -> Deklaracja ListaDeklaracji 
+DeklaracjaKlasy -> class Ident extends Ident { ListaDeklaracji } 
+Deklaracja -> DeklaracjaKlasy 
+Line: 55
+
+token: {
+ListaDeklaracji -> slowo puste 
+ListaDeklaracji -> Deklaracja ListaDeklaracji 
+ListaDeklaracji -> Deklaracja ListaDeklaracji 
+ListaDeklaracji -> Deklaracja ListaDeklaracji 
+ListaDeklaracji -> Deklaracja ListaDeklaracji 
+ListaDeklaracji -> Deklaracja ListaDeklaracji 
+ListaDeklaracji -> Deklaracja ListaDeklaracji 
+ListaDeklaracji -> Deklaracja ListaDeklaracji 
+ListaDeklaracji -> Deklaracja ListaDeklaracji 
+ListaDeklaracji -> Deklaracja ListaDeklaracji 
+Line: 56
+
+token: ID ("x")
+Ident -> Identyfikator 
+WyrazeniePodstawowe -> Ident 
+WyrazeniePostfiksowe -> WyrazeniePodstawowe 
+token: :=
+token: - (unary)
+OperatorUnarny -> - 
+token: INT_VAL (50)
+WyrazeniePodstawowe -> INT_VAL 
+WyrazeniePostfiksowe -> WyrazeniePodstawowe 
+token: ;
+WyrazenieUnarne -> WyrazeniePostfiksowe 
+WyrazenieUnarne -> OperatorUnarny WyrazenieUnarne 
+ WyrazenieMultiplikatywne -> WyrazenieUnarne 
+WyrazenieAddytywne -> WyrazenieMultiplikatywne 
+WyrazeniePorownania -> WyrazenieAddytywne 
+Wyrazenielogiczne -> WyrazeniePorownania 
+Wyrazenie -> Wyrazenielogiczne 
+Instrukcja -> WyrazeniePostfiksowe := Wyrazenie ; 
+Line: 57
+
+token: ID ("a")
+Ident -> Identyfikator 
+WyrazeniePodstawowe -> Ident 
+WyrazeniePostfiksowe -> WyrazeniePodstawowe 
+token: :=
+token: STRING_VAL ("Ala ma kotka")
+WyrazeniePodstawowe -> STRING_VAL 
+WyrazeniePostfiksowe -> WyrazeniePodstawowe 
+token: ;
+WyrazenieUnarne -> WyrazeniePostfiksowe 
+ WyrazenieMultiplikatywne -> WyrazenieUnarne 
+WyrazenieAddytywne -> WyrazenieMultiplikatywne 
+WyrazeniePorownania -> WyrazenieAddytywne 
+Wyrazenielogiczne -> WyrazeniePorownania 
+Wyrazenie -> Wyrazenielogiczne 
+Instrukcja -> WyrazeniePostfiksowe := Wyrazenie ; 
+Line: 58
+
+token: ID ("y")
+Ident -> Identyfikator 
+WyrazeniePodstawowe -> Ident 
+WyrazeniePostfiksowe -> WyrazeniePodstawowe 
+token: :=
+token: new
+token: int
+Typ -> int 
+token: [
+token: INT_VAL (3)
+WyrazeniePodstawowe -> INT_VAL 
+WyrazeniePostfiksowe -> WyrazeniePodstawowe 
+token: *
+WyrazenieUnarne -> WyrazeniePostfiksowe 
+ WyrazenieMultiplikatywne -> WyrazenieUnarne 
+OperatorMultiplikatywny -> * 
+token: ID ("x")
+Ident -> Identyfikator 
+WyrazeniePodstawowe -> Ident 
+WyrazeniePostfiksowe -> WyrazeniePodstawowe 
+token: ]
+WyrazenieUnarne -> WyrazeniePostfiksowe 
+WyrazenieMultiplikatywne -> WyrazenieMultiplikatywne OperatorMultiplikatywny WyrazenieUnarne 
+WyrazenieAddytywne -> WyrazenieMultiplikatywne 
+WyrazeniePorownania -> WyrazenieAddytywne 
+Wyrazenielogiczne -> WyrazeniePorownania 
+Wyrazenie -> Wyrazenielogiczne 
+Wyrazenie -> new Typ [Wyrazenie] 
+token: ;
+Instrukcja -> WyrazeniePostfiksowe := Wyrazenie ; 
+Line: 59
+
+token: ID ("x")
+Ident -> Identyfikator 
+WyrazeniePodstawowe -> Ident 
+WyrazeniePostfiksowe -> WyrazeniePodstawowe 
+token: :=
+token: ID ("x")
+Ident -> Identyfikator 
+WyrazeniePodstawowe -> Ident 
+WyrazeniePostfiksowe -> WyrazeniePodstawowe 
+token: +
+WyrazenieUnarne -> WyrazeniePostfiksowe 
+ WyrazenieMultiplikatywne -> WyrazenieUnarne 
+WyrazenieAddytywne -> WyrazenieMultiplikatywne 
+OperatorAddytywny -> + 
+token: ID ("silnia")
+Ident -> Identyfikator 
+WyrazeniePodstawowe -> Ident 
+WyrazeniePostfiksowe -> WyrazeniePodstawowe 
+token: (
+token: INT_VAL (6)
+WyrazeniePodstawowe -> INT_VAL 
+WyrazeniePostfiksowe -> WyrazeniePodstawowe 
+token: )
+WyrazenieUnarne -> WyrazeniePostfiksowe 
+ WyrazenieMultiplikatywne -> WyrazenieUnarne 
+WyrazenieAddytywne -> WyrazenieMultiplikatywne 
+WyrazeniePorownania -> WyrazenieAddytywne 
+Wyrazenielogiczne -> WyrazeniePorownania 
+Wyrazenie -> Wyrazenielogiczne 
+ListaWyrazen -> Wyrazenie 
+Parametry -> ListaWyrazen 
+WyrazeniePostfiksowe -> WyrazeniePostfiksowe (Parametry) 
+token: +
+WyrazenieUnarne -> WyrazeniePostfiksowe 
+ WyrazenieMultiplikatywne -> WyrazenieUnarne 
+WyrazenieAddytywne -> WyrazenieAddytywne OperatorAddytywny WyrazenieMultiplikatywne 
+OperatorAddytywny -> + 
+token: ID ("square")
+Ident -> Identyfikator 
+WyrazeniePodstawowe -> Ident 
+WyrazeniePostfiksowe -> WyrazeniePodstawowe 
+token: (
+token: INT_VAL (3)
+WyrazeniePodstawowe -> INT_VAL 
+WyrazeniePostfiksowe -> WyrazeniePodstawowe 
+token: )
+WyrazenieUnarne -> WyrazeniePostfiksowe 
+ WyrazenieMultiplikatywne -> WyrazenieUnarne 
+WyrazenieAddytywne -> WyrazenieMultiplikatywne 
+WyrazeniePorownania -> WyrazenieAddytywne 
+Wyrazenielogiczne -> WyrazeniePorownania 
+Wyrazenie -> Wyrazenielogiczne 
+ListaWyrazen -> Wyrazenie 
+Parametry -> ListaWyrazen 
+WyrazeniePostfiksowe -> WyrazeniePostfiksowe (Parametry) 
+token: +
+WyrazenieUnarne -> WyrazeniePostfiksowe 
+ WyrazenieMultiplikatywne -> WyrazenieUnarne 
+WyrazenieAddytywne -> WyrazenieAddytywne OperatorAddytywny WyrazenieMultiplikatywne 
+OperatorAddytywny -> + 
+token: ID ("cube")
+Ident -> Identyfikator 
+WyrazeniePodstawowe -> Ident 
+WyrazeniePostfiksowe -> WyrazeniePodstawowe 
+token: (
+token: INT_VAL (3)
+WyrazeniePodstawowe -> INT_VAL 
+WyrazeniePostfiksowe -> WyrazeniePodstawowe 
+token: )
+WyrazenieUnarne -> WyrazeniePostfiksowe 
+ WyrazenieMultiplikatywne -> WyrazenieUnarne 
+WyrazenieAddytywne -> WyrazenieMultiplikatywne 
+WyrazeniePorownania -> WyrazenieAddytywne 
+Wyrazenielogiczne -> WyrazeniePorownania 
+Wyrazenie -> Wyrazenielogiczne 
+ListaWyrazen -> Wyrazenie 
+Parametry -> ListaWyrazen 
+WyrazeniePostfiksowe -> WyrazeniePostfiksowe (Parametry) 
+token: ;
+WyrazenieUnarne -> WyrazeniePostfiksowe 
+ WyrazenieMultiplikatywne -> WyrazenieUnarne 
+WyrazenieAddytywne -> WyrazenieAddytywne OperatorAddytywny WyrazenieMultiplikatywne 
+WyrazeniePorownania -> WyrazenieAddytywne 
+Wyrazenielogiczne -> WyrazeniePorownania 
+Wyrazenie -> Wyrazenielogiczne 
+Instrukcja -> WyrazeniePostfiksowe := Wyrazenie ; 
+Line: 60
+
+Line: 61
+
+token: read
+token: ID ("tmp")
+Ident -> Identyfikator 
+token: ;
+Instrukcja -> read Ident  ; 
+Line: 62
+
+token: write
+token: ID ("silnia")
+Ident -> Identyfikator 
+WyrazeniePodstawowe -> Ident 
+WyrazeniePostfiksowe -> WyrazeniePodstawowe 
+token: (
+token: ID ("tmp")
+Ident -> Identyfikator 
+WyrazeniePodstawowe -> Ident 
+WyrazeniePostfiksowe -> WyrazeniePodstawowe 
+token: )
+WyrazenieUnarne -> WyrazeniePostfiksowe 
+ WyrazenieMultiplikatywne -> WyrazenieUnarne 
+WyrazenieAddytywne -> WyrazenieMultiplikatywne 
+WyrazeniePorownania -> WyrazenieAddytywne 
+Wyrazenielogiczne -> WyrazeniePorownania 
+Wyrazenie -> Wyrazenielogiczne 
+ListaWyrazen -> Wyrazenie 
+Parametry -> ListaWyrazen 
+WyrazeniePostfiksowe -> WyrazeniePostfiksowe (Parametry) 
+token: ;
+WyrazenieUnarne -> WyrazeniePostfiksowe 
+ WyrazenieMultiplikatywne -> WyrazenieUnarne 
+WyrazenieAddytywne -> WyrazenieMultiplikatywne 
+WyrazeniePorownania -> WyrazenieAddytywne 
+Wyrazenielogiczne -> WyrazeniePorownania 
+Wyrazenie -> Wyrazenielogiczne 
+Instrukcja -> write Wyrazenie ; 
+Line: 63
+
+Line: 64
+
+token: while
+token: ID ("tmp")
+Ident -> Identyfikator 
+WyrazeniePodstawowe -> Ident 
+WyrazeniePostfiksowe -> WyrazeniePodstawowe 
+token: >
+WyrazenieUnarne -> WyrazeniePostfiksowe 
+ WyrazenieMultiplikatywne -> WyrazenieUnarne 
+WyrazenieAddytywne -> WyrazenieMultiplikatywne 
+OperatorPorownania -> > 
+token: INT_VAL (0)
+WyrazeniePodstawowe -> INT_VAL 
+WyrazeniePostfiksowe -> WyrazeniePodstawowe 
+token: do
+WyrazenieUnarne -> WyrazeniePostfiksowe 
+ WyrazenieMultiplikatywne -> WyrazenieUnarne 
+WyrazenieAddytywne -> WyrazenieMultiplikatywne 
+WyrazeniePorownania -> Wyrazenieaddytywne OperatorPorownania WyrazenieAddytywne 
+Wyrazenielogiczne -> WyrazeniePorownania 
+Wyrazenie -> Wyrazenielogiczne 
+Line: 65
+
+token: ID ("tmp")
+Ident -> Identyfikator 
+WyrazeniePodstawowe -> Ident 
+WyrazeniePostfiksowe -> WyrazeniePodstawowe 
+token: :=
+token: ID ("tmp")
+Ident -> Identyfikator 
+WyrazeniePodstawowe -> Ident 
+WyrazeniePostfiksowe -> WyrazeniePodstawowe 
+token: -
+WyrazenieUnarne -> WyrazeniePostfiksowe 
+ WyrazenieMultiplikatywne -> WyrazenieUnarne 
+WyrazenieAddytywne -> WyrazenieMultiplikatywne 
+OperatorAddytywny -> - 
+token: INT_VAL (1)
+WyrazeniePodstawowe -> INT_VAL 
+WyrazeniePostfiksowe -> WyrazeniePodstawowe 
+token: ;
+WyrazenieUnarne -> WyrazeniePostfiksowe 
+ WyrazenieMultiplikatywne -> WyrazenieUnarne 
+WyrazenieAddytywne -> WyrazenieAddytywne OperatorAddytywny WyrazenieMultiplikatywne 
+WyrazeniePorownania -> WyrazenieAddytywne 
+Wyrazenielogiczne -> WyrazeniePorownania 
+Wyrazenie -> Wyrazenielogiczne 
+Instrukcja -> WyrazeniePostfiksowe := Wyrazenie ; 
+Line: 66
+
+token: write
+token: ID ("a")
+Ident -> Identyfikator 
+WyrazeniePodstawowe -> Ident 
+WyrazeniePostfiksowe -> WyrazeniePodstawowe 
+token: ;
+WyrazenieUnarne -> WyrazeniePostfiksowe 
+ WyrazenieMultiplikatywne -> WyrazenieUnarne 
+WyrazenieAddytywne -> WyrazenieMultiplikatywne 
+WyrazeniePorownania -> WyrazenieAddytywne 
+Wyrazenielogiczne -> WyrazeniePorownania 
+Wyrazenie -> Wyrazenielogiczne 
+Instrukcja -> write Wyrazenie ; 
+Line: 67
+
+token: done
+ListaInstrukcji -> Slowo puste 
+ListaInstrukcji -> Instrukcja ListaInstrukcji 
+ListaInstrukcji -> Instrukcja ListaInstrukcji 
+ZlozonaInstrukcja -> while Wyrazenie do ListaInstrukcji done 
+token: ;
+Instrukcja -> ZlozonaInstrukcja ; 
+Line: 68
+
+Line: 69
+
+token: delete
+token: ID ("tmp")
+Ident -> Identyfikator 
+WyrazeniePodstawowe -> Ident 
+WyrazeniePostfiksowe -> WyrazeniePodstawowe 
+token: ;
+WyrazenieUnarne -> WyrazeniePostfiksowe 
+ WyrazenieMultiplikatywne -> WyrazenieUnarne 
+WyrazenieAddytywne -> WyrazenieMultiplikatywne 
+WyrazeniePorownania -> WyrazenieAddytywne 
+Wyrazenielogiczne -> WyrazeniePorownania 
+Wyrazenie -> Wyrazenielogiczne 
+Instrukcja -> delete Wyrazenie ; 
+Line: 70
+
+token: }
+ListaInstrukcji -> Slowo puste 
+ListaInstrukcji -> Instrukcja ListaInstrukcji 
+ListaInstrukcji -> Instrukcja ListaInstrukcji 
+ListaInstrukcji -> Instrukcja ListaInstrukcji 
+ListaInstrukcji -> Instrukcja ListaInstrukcji 
+ListaInstrukcji -> Instrukcja ListaInstrukcji 
+ListaInstrukcji -> Instrukcja ListaInstrukcji 
+ListaInstrukcji -> Instrukcja ListaInstrukcji 
+ListaInstrukcji -> Instrukcja ListaInstrukcji 
+Blok -> { ListaInstrukcji } 
+Cialo -> ListaDeklaracji Blok 
+prog -> program ; Cialo 
+Line: 71
+
+***EOF

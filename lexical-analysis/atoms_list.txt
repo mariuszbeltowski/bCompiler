@@ -1,0 +1,29 @@
+- Keywords KEYWORD(T)
+Where T is: array class delete do done else endif extends function if int new null of program read return string super then this type var void while write
++26
+
+- Operators:
+OPER_UNARNY - +, -
+OPER_ADDITIVE - +, -
+OPER_ASSIGN - := , =
+OPER_MULTIPLICATIVE - *, /
+OPER_BRACKET - (, )
+OPER_SQBRACKET - [, ]
+OPER_BRACE - {, }
+OPER_SEMICOLON - ;
+OPER_COLON - :
+OPER_COMMA - ,
+OPER_DOT - .
+OPER_NEG - !
+OPER_LOGIC - &&, ||
+OPER_REL - >=, <=, >, <
++13
+
+- Other:
+ID(T)
+STRING(T)
+INT(T)
+REAL(T)
++4
+
+Sum: 43 different atoms (without comments)

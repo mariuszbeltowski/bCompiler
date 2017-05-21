@@ -1,0 +1,71 @@
+program;
+var x: int
+var h: string
+var y: int
+var tmp: int
+/* count tree leafs */
+function ileLisci(var t: tree): int
+{
+   if t == null
+   then
+      // one line comment
+      result := 0;
+   else
+      result := ileLisci(t.left) + ileLisci(t.right);
+   endif;
+}
+function silnia(var liczba: int): int
+{
+  if liczba > 0
+  then
+    result := silnia(liczba) * (liczba - 1);
+  else
+    result := 1;
+  endif;
+
+  return result;
+}
+function dodatnie( var liczba: int ): bool
+{
+   if liczba > 0
+   then
+      return true;
+   else
+      return false;
+   endif;
+}
+function square(var liczba: int ): int
+{
+   return liczba * liczba;
+}
+class Kotek extends Zwierze {
+  var nazwa: string
+  type TablicaSzczepien = array of string
+  type Test = {
+    var x: string,
+    var y: int
+  }
+  var szczepienia: TablicaSzczepien
+  function obliczWiekLudzki(): int
+  {
+    result := 3 * super.wiek;
+    write result;
+    return result;
+   }
+}
+{
+  x := - 50;
+  a := "Ala ma kotka";
+  y := new int [ 3*x ];
+  x := x + silnia(6) + square(3) + cube(3);
+
+  read tmp;
+  write silnia(tmp);
+
+  while tmp > 0 do
+    tmp := tmp - 1;
+    write a;
+    done;
+    
+  delete tmp;
+}

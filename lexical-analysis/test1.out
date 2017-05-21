@@ -1,0 +1,410 @@
+Plik: ./Scaner
+----------------------------------------
+KEYWORD("program")
+OPER_SEMICOLON
+Line: 0
+
+KEYWORD("var")
+ID("x")
+OPER_COLON
+KEYWORD("int")
+Line: 1
+
+KEYWORD("var")
+ID("h")
+OPER_COLON
+KEYWORD("string")
+Line: 2
+
+KEYWORD("var")
+ID("y")
+OPER_COLON
+KEYWORD("int")
+Line: 3
+
+KEYWORD("var")
+ID("tmp")
+OPER_COLON
+KEYWORD("int")
+Line: 4
+
+Line: 5
+
+KEYWORD("function")
+ID("ileLisci")
+OPER_BRACKET
+KEYWORD("var")
+ID("t")
+OPER_COLON
+ID("tree")
+OPER_BRACKET
+OPER_COLON
+KEYWORD("int")
+Line: 6
+
+OPER_BRACE
+Line: 7
+
+KEYWORD("if")
+ID("t")
+OPER_REL
+KEYWORD("null")
+Line: 8
+
+KEYWORD("then")
+Line: 9
+
+Line: 11
+
+ID("result")
+OPER_ASSIGN
+INT(0)
+OPER_SEMICOLON
+Line: 12
+
+KEYWORD("else")
+Line: 13
+
+ID("result")
+OPER_ASSIGN
+ID("ileLisci")
+OPER_BRACKET
+ID("t")
+OPER_DOT
+ID("left")
+OPER_BRACKET
+OPER_ADDITIVE
+ID("ileLisci")
+OPER_BRACKET
+ID("t")
+OPER_DOT
+ID("right")
+OPER_BRACKET
+OPER_SEMICOLON
+Line: 14
+
+KEYWORD("endif")
+OPER_SEMICOLON
+Line: 15
+
+OPER_BRACE
+Line: 16
+
+KEYWORD("function")
+ID("silnia")
+OPER_BRACKET
+KEYWORD("var")
+ID("liczba")
+OPER_COLON
+KEYWORD("int")
+OPER_BRACKET
+OPER_COLON
+KEYWORD("int")
+Line: 17
+
+OPER_BRACE
+Line: 18
+
+KEYWORD("if")
+ID("liczba")
+OPER_REL
+INT(0)
+Line: 19
+
+KEYWORD("then")
+Line: 20
+
+ID("result")
+OPER_ASSIGN
+ID("silnia")
+OPER_BRACKET
+ID("liczba")
+OPER_BRACKET
+OPER_MULTIPLICATIVE
+OPER_BRACKET
+ID("liczba")
+OPER_ADDITIVE
+INT(1)
+OPER_BRACKET
+OPER_SEMICOLON
+Line: 21
+
+KEYWORD("else")
+Line: 22
+
+ID("result")
+OPER_ASSIGN
+INT(1)
+OPER_SEMICOLON
+Line: 23
+
+KEYWORD("endif")
+OPER_SEMICOLON
+Line: 24
+
+Line: 25
+
+KEYWORD("return")
+ID("result")
+OPER_SEMICOLON
+Line: 26
+
+OPER_BRACE
+Line: 27
+
+KEYWORD("function")
+ID("dodatnie")
+OPER_BRACKET
+KEYWORD("var")
+ID("liczba")
+OPER_COLON
+KEYWORD("int")
+OPER_BRACKET
+OPER_COLON
+ID("bool")
+Line: 28
+
+OPER_BRACE
+Line: 29
+
+KEYWORD("if")
+ID("liczba")
+OPER_REL
+INT(0)
+Line: 30
+
+KEYWORD("then")
+Line: 31
+
+KEYWORD("return")
+ID("true")
+OPER_SEMICOLON
+Line: 32
+
+KEYWORD("else")
+Line: 33
+
+KEYWORD("return")
+ID("false")
+OPER_SEMICOLON
+Line: 34
+
+KEYWORD("endif")
+OPER_SEMICOLON
+Line: 35
+
+OPER_BRACE
+Line: 36
+
+KEYWORD("function")
+ID("square")
+OPER_BRACKET
+KEYWORD("var")
+ID("liczba")
+OPER_COLON
+KEYWORD("int")
+OPER_BRACKET
+OPER_COLON
+KEYWORD("int")
+Line: 37
+
+OPER_BRACE
+Line: 38
+
+KEYWORD("return")
+ID("liczba")
+OPER_MULTIPLICATIVE
+ID("liczba")
+OPER_SEMICOLON
+Line: 39
+
+OPER_BRACE
+Line: 40
+
+KEYWORD("class")
+ID("Kotek")
+KEYWORD("extends")
+ID("Zwierze")
+OPER_BRACE
+Line: 41
+
+KEYWORD("var")
+ID("nazwa")
+OPER_COLON
+KEYWORD("string")
+Line: 42
+
+KEYWORD("type")
+ID("TablicaSzczepien")
+OPER_ASSIGN
+KEYWORD("array")
+KEYWORD("of")
+KEYWORD("string")
+Line: 43
+
+KEYWORD("type")
+ID("Test")
+OPER_ASSIGN
+OPER_BRACE
+Line: 44
+
+KEYWORD("var")
+ID("x")
+OPER_COLON
+KEYWORD("string")
+OPER_COMMA
+Line: 45
+
+KEYWORD("var")
+ID("y")
+OPER_COLON
+KEYWORD("int")
+Line: 46
+
+OPER_BRACE
+Line: 47
+
+KEYWORD("var")
+ID("szczepienia")
+OPER_COLON
+ID("TablicaSzczepien")
+Line: 48
+
+KEYWORD("function")
+ID("obliczWiekLudzki")
+OPER_BRACKET
+OPER_BRACKET
+OPER_COLON
+KEYWORD("int")
+Line: 49
+
+OPER_BRACE
+Line: 50
+
+ID("result")
+OPER_ASSIGN
+INT(3)
+OPER_MULTIPLICATIVE
+KEYWORD("super")
+OPER_DOT
+ID("wiek")
+OPER_SEMICOLON
+Line: 51
+
+KEYWORD("write")
+ID("result")
+OPER_SEMICOLON
+Line: 52
+
+KEYWORD("return")
+ID("result")
+OPER_SEMICOLON
+Line: 53
+
+OPER_BRACE
+Line: 54
+
+OPER_BRACE
+Line: 55
+
+OPER_BRACE
+Line: 56
+
+ID("x")
+OPER_ASSIGN
+OPER_UNARNY
+INT(50)
+OPER_SEMICOLON
+Line: 57
+
+ID("a")
+OPER_ASSIGN
+STRING("Ala ma kotka")
+OPER_SEMICOLON
+Line: 58
+
+ID("y")
+OPER_ASSIGN
+KEYWORD("new")
+KEYWORD("int")
+OPER_SQBRACKET
+INT(3)
+OPER_MULTIPLICATIVE
+ID("x")
+OPER_SQBRACKET
+OPER_SEMICOLON
+Line: 59
+
+ID("x")
+OPER_ASSIGN
+ID("x")
+OPER_ADDITIVE
+ID("silnia")
+OPER_BRACKET
+INT(6)
+OPER_BRACKET
+OPER_ADDITIVE
+ID("square")
+OPER_BRACKET
+INT(3)
+OPER_BRACKET
+OPER_ADDITIVE
+ID("cube")
+OPER_BRACKET
+INT(3)
+OPER_BRACKET
+OPER_SEMICOLON
+Line: 60
+
+Line: 61
+
+KEYWORD("read")
+ID("tmp")
+OPER_SEMICOLON
+Line: 62
+
+KEYWORD("write")
+ID("silnia")
+OPER_BRACKET
+ID("tmp")
+OPER_BRACKET
+OPER_SEMICOLON
+Line: 63
+
+Line: 64
+
+KEYWORD("while")
+ID("tmp")
+OPER_REL
+INT(0)
+KEYWORD("do")
+Line: 65
+
+ID("tmp")
+OPER_ASSIGN
+ID("tmp")
+OPER_ADDITIVE
+INT(1)
+OPER_SEMICOLON
+Line: 66
+
+KEYWORD("write")
+ID("a")
+OPER_SEMICOLON
+Line: 67
+
+KEYWORD("done")
+OPER_SEMICOLON
+Line: 68
+
+Line: 69
+
+KEYWORD("delete")
+ID("tmp")
+OPER_SEMICOLON
+Line: 70
+
+OPER_BRACE
+Line: 71
+
+EOF

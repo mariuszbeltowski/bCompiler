@@ -1,0 +1,49 @@
+program;
+var x: int
+var h: string
+var y: int
+/* count tree leafs */
+function ileLisci(var t: tree): int
+{
+   if t == null
+   then
+      // one line comment
+      result := 0;
+   else
+      result := ileLisci(t.left) + ileLisci(t.right);
+   endif;
+   #
+}
+function silnia(var liczba: int): int
+{
+  $
+  if liczba > 0
+  then
+    result := silnia(liczba) * (liczba - 1);
+  else
+    result := 1;
+  endif; ^
+}
+function dodatnie( var liczba: int ):
+{
+   if liczba > 0
+   then
+      result := true;
+   else
+      result := false;
+   endif;
+}
+function square(var liczba: int ): int
+{
+   result := liczba * liczba;
+}
+function cube(var liczba: int ): int
+{
+   result := liczba * liczba * ;
+}
+{
+  x := - 50;
+  a := "Ala ma kotka;
+  y := new int [ 3*x ];
+  /* x := x + silnia(6) + square(3) + cube(3);
+}
