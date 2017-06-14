@@ -1,0 +1,11 @@
+program;
+var tmp: int
+var str: string
+var i: int
+{
+  tmp := 4;
+
+  for i := 0 to tmp do
+    read tmp;
+  ;
+}

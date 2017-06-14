@@ -1,0 +1,14 @@
+program;
+var tmp: int
+{
+  tmp := 4;
+
+  case tmp of
+    4:
+      read tmp;
+    5:
+      write tmp;
+    6:
+      write 6;
+  ;
+}

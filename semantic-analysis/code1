@@ -1,0 +1,19 @@
+--     End Of Compilation        --
+-----------------------------------
+            ONP              
+ -----------------------------------
+
+0-9: x, true, :=, x, true, ==, addr(15), JFalse, x, false, 
+10-19: false, !, :=, addr(18), JUMP, x, true, :=, x, false, 
+20-29: ==, addr(33), JFalse, num, num, num, *, :=, num2, num2, 
+30-39: num, +, :=, 
+-----------------------------------
+            Symbols              
+ -----------------------------------
+x: boolean
+tmp: string
+num: int
+num2: real
+true: boolean
+false: boolean
+-----------------------------------

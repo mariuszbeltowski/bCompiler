@@ -1,0 +1,9 @@
+program;
+var tmp: real
+{
+  tmp := 8;
+
+  while tmp == 4 do
+    tmp := true;
+    done;
+}

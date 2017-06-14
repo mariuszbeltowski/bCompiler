@@ -1,0 +1,19 @@
+program;
+var x: boolean
+var tmp: string
+var num: int
+var num2: real
+{
+  x := true;
+
+  if x == true then
+    x := ! false;
+  else
+    x := true;
+  endif;
+
+  if x == false then
+    num := num * num;
+    num2 := num2 + num;
+  endif;
+}

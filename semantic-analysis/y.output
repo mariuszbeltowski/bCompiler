@@ -1,0 +1,2953 @@
+Terminals unused in grammar
+
+   DIGIT
+   LETTER
+   '%'
+
+
+Grammar
+
+    0 $accept: prog $end
+
+    1 prog: PROGRAM ';' Cialo
+
+    2 Cialo: ListaDeklaracji Blok
+
+    3 Blok: '{' ListaInstrukcji '}'
+
+    4 ListaDeklaracji: %empty
+    5                | Deklaracja ListaDeklaracji
+
+    6 Deklaracja: DeklaracjaTypu
+    7           | DeklaracjaZmiennej
+    8           | DeklaracjaFunkcji
+    9           | DeklaracjaKlasy
+
+   10 DeklaracjaTypu: TYPE Ident '=' OpisTypu
+
+   11 OpisTypu: Ident
+   12         | '{' ListaDeklaracjiZmiennej '}'
+   13         | ARRAY OF Typ
+
+   14 ListaDeklaracjiZmiennej: DeklaracjaZmiennej
+   15                        | DeklaracjaZmiennej ',' ListaDeklaracjiZmiennej
+
+   16 Typ: Ident
+   17    | STRING
+   18    | INT
+   19    | VOID
+   20    | REAL
+   21    | BOOLEAN
+
+   22 DeklaracjaZmiennej: VAR Ident ':' Typ
+
+   23 DeklaracjaFunkcji: FUNCTION Ident '(' DeklaracjaArgumentow ')' ':' Typ Cialo
+
+   24 DeklaracjaArgumentow: ListaDeklaracjiZmiennej
+   25                     | %empty
+
+   26 ListaInstrukcji: %empty
+   27                | Instrukcja ListaInstrukcji
+
+   28 Instrukcja: Wyrazenie ';'
+   29           | ZlozonaInstrukcja ';'
+   30           | WyrazeniePostfiksowe OPER_ASSIGN Wyrazenie ';'
+   31           | Blok
+   32           | DELETE Wyrazenie ';'
+   33           | ';'
+   34           | READ Ident ';'
+   35           | WRITE Wyrazenie ';'
+   36           | RETURN Wyrazenie ';'
+   37           | RETURN ';'
+
+   38 WyrazeniePodstawowe: Ident
+   39                    | STRING_VAL
+   40                    | INT_VAL
+   41                    | REAL_VAL
+   42                    | TRUE
+   43                    | FALSE
+   44                    | '(' Wyrazenie ')'
+   45                    | THIS
+   46                    | SUPER
+   47                    | NULL_
+
+   48 WyrazeniePostfiksowe: WyrazeniePostfiksowe '[' Wyrazenie ']'
+   49                     | WyrazeniePostfiksowe '(' Parametry ')'
+   50                     | WyrazeniePostfiksowe '.' Ident
+   51                     | WyrazeniePodstawowe
+
+   52 Parametry: %empty
+   53          | ListaWyrazen
+
+   54 ListaWyrazen: Wyrazenie
+   55             | Wyrazenie ',' ListaWyrazen
+
+   56 WyrazenieUnarne: OperatorUnarny WyrazenieUnarne
+   57                | WyrazeniePostfiksowe
+
+   58 OperatorUnarny: OPER_UMINUS
+   59               | OPER_UPLUS
+   60               | '!'
+
+   61 WyrazenieMultiplikatywne: WyrazenieMultiplikatywne OperatorMultiplikatywny WyrazenieUnarne
+   62                         | WyrazenieUnarne
+
+   63 WyrazenieAddytywne: WyrazenieAddytywne OperatorAddytywny WyrazenieMultiplikatywne
+   64                   | WyrazenieMultiplikatywne
+
+   65 OperatorMultiplikatywny: '*'
+   66                        | '/'
+
+   67 OperatorAddytywny: '+'
+   68                  | '-'
+
+   69 WyrazeniePorownania: WyrazenieAddytywne OperatorPorownania WyrazenieAddytywne
+   70                    | WyrazenieAddytywne
+
+   71 OperatorPorownania: OPER_LESSER
+   72                   | OPER_GREATER
+   73                   | OPER_ELESSER
+   74                   | OPER_EGREATER
+   75                   | OPER_EQUAL
+   76                   | OPER_NEQUAL
+
+   77 WyrazenieLogiczne: WyrazeniePorownania OPER_OR WyrazeniePorownania
+   78                  | WyrazeniePorownania OPER_AND WyrazeniePorownania
+   79                  | WyrazeniePorownania
+
+   80 Wyrazenie: WyrazenieLogiczne
+   81          | NEW Typ
+   82          | NEW Typ '[' Wyrazenie ']'
+
+   83 ZlozonaInstrukcja: InstrukcjaIf
+   84                  | InstrukcjaWhile
+   85                  | InstrukcjaRepeat
+   86                  | InstrukcjaCase
+   87                  | InstrukcjaFor
+
+   88 InstrukcjaForId: Ident
+
+   89 InstrukcjaForAss: FOR InstrukcjaForId OPER_ASSIGN Wyrazenie
+
+   90 TO_DOWNTO: TO
+   91          | DOWNTO
+
+   92 InstrukcjaForStart: InstrukcjaForAss TO_DOWNTO Wyrazenie
+
+   93 InstrukcjaFor: InstrukcjaForStart DO Instrukcja
+
+   94 InstrukcjaCase: InstrukcjaCaseStartInstrukcja ELSE Instrukcja
+   95               | InstrukcjaCaseStartInstrukcja
+
+   96 InstrukcjaCaseStart: CASE Ident OF Wyrazenie
+   97                    | InstrukcjaCaseStartInstrukcja Wyrazenie
+
+   98 InstrukcjaCaseStartInstrukcja: InstrukcjaCaseStart ':' Instrukcja
+
+   99 InstrukcjaRepeat: InstrukcjaRepeatStart Instrukcja UNTIL Wyrazenie
+
+  100 InstrukcjaRepeatStart: REPEAT
+
+  101 InstrukcjaWhile: InstrukcjaWhileWyrazenie DO Instrukcja DONE
+
+  102 InstrukcjaWhileWyrazenie: InstrukcjaWhileStart Wyrazenie
+
+  103 InstrukcjaWhileStart: WHILE
+
+  104 InstrukcjaIf: IfWyrazenieInstrukcja ELSE Instrukcja ENDIF
+  105             | IfWyrazenie THEN ListaInstrukcji ENDIF
+
+  106 IfWyrazenieInstrukcja: IfWyrazenie THEN Instrukcja
+
+  107 IfWyrazenie: IF Wyrazenie
+
+  108 DeklaracjaKlasy: CLASS Ident EXTENDS Ident '{' ListaDeklaracji '}'
+
+  109 Ident: ID
+
+
+Terminals, with rules where they appear
+
+$end (0) 0
+'!' (33) 60
+'%' (37)
+'(' (40) 23 44 49
+')' (41) 23 44 49
+'*' (42) 65
+'+' (43) 67
+',' (44) 15 55
+'-' (45) 68
+'.' (46) 50
+'/' (47) 66
+':' (58) 22 23 98
+';' (59) 1 28 29 30 32 33 34 35 36 37
+'=' (61) 10
+'[' (91) 48 82
+']' (93) 48 82
+'{' (123) 3 12 108
+'}' (125) 3 12 108
+error (256)
+DIGIT (258)
+LETTER (259)
+ARRAY (260) 13
+CLASS (261) 108
+DELETE (262) 32
+DO (263) 93 101
+DONE (264) 101
+ELSE (265) 94 104
+ENDIF (266) 104 105
+EXTENDS (267) 108
+FUNCTION (268) 23
+IF (269) 107
+INT (270) 18
+NEW (271) 81 82
+NULL_ (272) 47
+OF (273) 13 96
+PROGRAM (274) 1
+READ (275) 34
+RETURN (276) 36 37
+STRING (277) 17
+SUPER (278) 46
+THEN (279) 105 106
+THIS (280) 45
+TYPE (281) 10
+VAR (282) 22
+VOID (283) 19
+WHILE (284) 103
+WRITE (285) 35
+OPER_UMINUS (286) 58
+OPER_UPLUS (287) 59
+OPER_ASSIGN (288) 30 89
+OPER_EQUAL (289) 75
+OPER_NEQUAL (290) 76
+OPER_GREATER (291) 72
+OPER_LESSER (292) 71
+OPER_AND (293) 78
+OPER_OR (294) 77
+OPER_ELESSER (295) 73
+OPER_EGREATER (296) 74
+ID (297) 109
+INT_VAL (298) 40
+REAL_VAL (299) 41
+STRING_VAL (300) 39
+REAL (301) 20
+BOOLEAN (302) 21
+TRUE (303) 42
+FALSE (304) 43
+REPEAT (305) 100
+UNTIL (306) 99
+FOR (307) 89
+TO (308) 90
+DOWNTO (309) 91
+CASE (310) 96
+
+
+Nonterminals, with rules where they appear
+
+$accept (73)
+    on left: 0
+prog (74)
+    on left: 1, on right: 0
+Cialo (75)
+    on left: 2, on right: 1 23
+Blok (76)
+    on left: 3, on right: 2 31
+ListaDeklaracji (77)
+    on left: 4 5, on right: 2 5 108
+Deklaracja (78)
+    on left: 6 7 8 9, on right: 5
+DeklaracjaTypu (79)
+    on left: 10, on right: 6
+OpisTypu (80)
+    on left: 11 12 13, on right: 10
+ListaDeklaracjiZmiennej (81)
+    on left: 14 15, on right: 12 15 24
+Typ (82)
+    on left: 16 17 18 19 20 21, on right: 13 22 23 81 82
+DeklaracjaZmiennej (83)
+    on left: 22, on right: 7 14 15
+DeklaracjaFunkcji (84)
+    on left: 23, on right: 8
+DeklaracjaArgumentow (85)
+    on left: 24 25, on right: 23
+ListaInstrukcji (86)
+    on left: 26 27, on right: 3 27 105
+Instrukcja (87)
+    on left: 28 29 30 31 32 33 34 35 36 37, on right: 27 93 94 98 99
+    101 104 106
+WyrazeniePodstawowe (88)
+    on left: 38 39 40 41 42 43 44 45 46 47, on right: 51
+WyrazeniePostfiksowe (89)
+    on left: 48 49 50 51, on right: 30 48 49 50 57
+Parametry (90)
+    on left: 52 53, on right: 49
+ListaWyrazen (91)
+    on left: 54 55, on right: 53 55
+WyrazenieUnarne (92)
+    on left: 56 57, on right: 56 61 62
+OperatorUnarny (93)
+    on left: 58 59 60, on right: 56
+WyrazenieMultiplikatywne (94)
+    on left: 61 62, on right: 61 63 64
+WyrazenieAddytywne (95)
+    on left: 63 64, on right: 63 69 70
+OperatorMultiplikatywny (96)
+    on left: 65 66, on right: 61
+OperatorAddytywny (97)
+    on left: 67 68, on right: 63
+WyrazeniePorownania (98)
+    on left: 69 70, on right: 77 78 79
+OperatorPorownania (99)
+    on left: 71 72 73 74 75 76, on right: 69
+WyrazenieLogiczne (100)
+    on left: 77 78 79, on right: 80
+Wyrazenie (101)
+    on left: 80 81 82, on right: 28 30 32 35 36 44 48 54 55 82 89 92
+    96 97 99 102 107
+ZlozonaInstrukcja (102)
+    on left: 83 84 85 86 87, on right: 29
+InstrukcjaForId (103)
+    on left: 88, on right: 89
+InstrukcjaForAss (104)
+    on left: 89, on right: 92
+TO_DOWNTO (105)
+    on left: 90 91, on right: 92
+InstrukcjaForStart (106)
+    on left: 92, on right: 93
+InstrukcjaFor (107)
+    on left: 93, on right: 87
+InstrukcjaCase (108)
+    on left: 94 95, on right: 86
+InstrukcjaCaseStart (109)
+    on left: 96 97, on right: 98
+InstrukcjaCaseStartInstrukcja (110)
+    on left: 98, on right: 94 95 97
+InstrukcjaRepeat (111)
+    on left: 99, on right: 85
+InstrukcjaRepeatStart (112)
+    on left: 100, on right: 99
+InstrukcjaWhile (113)
+    on left: 101, on right: 84
+InstrukcjaWhileWyrazenie (114)
+    on left: 102, on right: 101
+InstrukcjaWhileStart (115)
+    on left: 103, on right: 102
+InstrukcjaIf (116)
+    on left: 104 105, on right: 83
+IfWyrazenieInstrukcja (117)
+    on left: 106, on right: 104
+IfWyrazenie (118)
+    on left: 107, on right: 105 106
+DeklaracjaKlasy (119)
+    on left: 108, on right: 9
+Ident (120)
+    on left: 109, on right: 10 11 16 22 23 34 38 50 88 96 108
+
+
+State 0
+
+    0 $accept: . prog $end
+
+    PROGRAM  shift, and go to state 1
+
+    prog  go to state 2
+
+
+State 1
+
+    1 prog: PROGRAM . ';' Cialo
+
+    ';'  shift, and go to state 3
+
+
+State 2
+
+    0 $accept: prog . $end
+
+    $end  shift, and go to state 4
+
+
+State 3
+
+    1 prog: PROGRAM ';' . Cialo
+
+    CLASS     shift, and go to state 5
+    FUNCTION  shift, and go to state 6
+    TYPE      shift, and go to state 7
+    VAR       shift, and go to state 8
+
+    $default  reduce using rule 4 (ListaDeklaracji)
+
+    Cialo               go to state 9
+    ListaDeklaracji     go to state 10
+    Deklaracja          go to state 11
+    DeklaracjaTypu      go to state 12
+    DeklaracjaZmiennej  go to state 13
+    DeklaracjaFunkcji   go to state 14
+    DeklaracjaKlasy     go to state 15
+
+
+State 4
+
+    0 $accept: prog $end .
+
+    $default  accept
+
+
+State 5
+
+  108 DeklaracjaKlasy: CLASS . Ident EXTENDS Ident '{' ListaDeklaracji '}'
+
+    ID  shift, and go to state 16
+
+    Ident  go to state 17
+
+
+State 6
+
+   23 DeklaracjaFunkcji: FUNCTION . Ident '(' DeklaracjaArgumentow ')' ':' Typ Cialo
+
+    ID  shift, and go to state 16
+
+    Ident  go to state 18
+
+
+State 7
+
+   10 DeklaracjaTypu: TYPE . Ident '=' OpisTypu
+
+    ID  shift, and go to state 16
+
+    Ident  go to state 19
+
+
+State 8
+
+   22 DeklaracjaZmiennej: VAR . Ident ':' Typ
+
+    ID  shift, and go to state 16
+
+    Ident  go to state 20
+
+
+State 9
+
+    1 prog: PROGRAM ';' Cialo .
+
+    $default  reduce using rule 1 (prog)
+
+
+State 10
+
+    2 Cialo: ListaDeklaracji . Blok
+
+    '{'  shift, and go to state 21
+
+    Blok  go to state 22
+
+
+State 11
+
+    5 ListaDeklaracji: Deklaracja . ListaDeklaracji
+
+    CLASS     shift, and go to state 5
+    FUNCTION  shift, and go to state 6
+    TYPE      shift, and go to state 7
+    VAR       shift, and go to state 8
+
+    $default  reduce using rule 4 (ListaDeklaracji)
+
+    ListaDeklaracji     go to state 23
+    Deklaracja          go to state 11
+    DeklaracjaTypu      go to state 12
+    DeklaracjaZmiennej  go to state 13
+    DeklaracjaFunkcji   go to state 14
+    DeklaracjaKlasy     go to state 15
+
+
+State 12
+
+    6 Deklaracja: DeklaracjaTypu .
+
+    $default  reduce using rule 6 (Deklaracja)
+
+
+State 13
+
+    7 Deklaracja: DeklaracjaZmiennej .
+
+    $default  reduce using rule 7 (Deklaracja)
+
+
+State 14
+
+    8 Deklaracja: DeklaracjaFunkcji .
+
+    $default  reduce using rule 8 (Deklaracja)
+
+
+State 15
+
+    9 Deklaracja: DeklaracjaKlasy .
+
+    $default  reduce using rule 9 (Deklaracja)
+
+
+State 16
+
+  109 Ident: ID .
+
+    $default  reduce using rule 109 (Ident)
+
+
+State 17
+
+  108 DeklaracjaKlasy: CLASS Ident . EXTENDS Ident '{' ListaDeklaracji '}'
+
+    EXTENDS  shift, and go to state 24
+
+
+State 18
+
+   23 DeklaracjaFunkcji: FUNCTION Ident . '(' DeklaracjaArgumentow ')' ':' Typ Cialo
+
+    '('  shift, and go to state 25
+
+
+State 19
+
+   10 DeklaracjaTypu: TYPE Ident . '=' OpisTypu
+
+    '='  shift, and go to state 26
+
+
+State 20
+
+   22 DeklaracjaZmiennej: VAR Ident . ':' Typ
+
+    ':'  shift, and go to state 27
+
+
+State 21
+
+    3 Blok: '{' . ListaInstrukcji '}'
+
+    DELETE       shift, and go to state 28
+    IF           shift, and go to state 29
+    NEW          shift, and go to state 30
+    NULL_        shift, and go to state 31
+    READ         shift, and go to state 32
+    RETURN       shift, and go to state 33
+    SUPER        shift, and go to state 34
+    THIS         shift, and go to state 35
+    WHILE        shift, and go to state 36
+    WRITE        shift, and go to state 37
+    OPER_UMINUS  shift, and go to state 38
+    OPER_UPLUS   shift, and go to state 39
+    ID           shift, and go to state 16
+    INT_VAL      shift, and go to state 40
+    REAL_VAL     shift, and go to state 41
+    STRING_VAL   shift, and go to state 42
+    TRUE         shift, and go to state 43
+    FALSE        shift, and go to state 44
+    REPEAT       shift, and go to state 45
+    FOR          shift, and go to state 46
+    CASE         shift, and go to state 47
+    ';'          shift, and go to state 48
+    '{'          shift, and go to state 21
+    '('          shift, and go to state 49
+    '!'          shift, and go to state 50
+
+    $default  reduce using rule 26 (ListaInstrukcji)
+
+    Blok                           go to state 51
+    ListaInstrukcji                go to state 52
+    Instrukcja                     go to state 53
+    WyrazeniePodstawowe            go to state 54
+    WyrazeniePostfiksowe           go to state 55
+    WyrazenieUnarne                go to state 56
+    OperatorUnarny                 go to state 57
+    WyrazenieMultiplikatywne       go to state 58
+    WyrazenieAddytywne             go to state 59
+    WyrazeniePorownania            go to state 60
+    WyrazenieLogiczne              go to state 61
+    Wyrazenie                      go to state 62
+    ZlozonaInstrukcja              go to state 63
+    InstrukcjaForAss               go to state 64
+    InstrukcjaForStart             go to state 65
+    InstrukcjaFor                  go to state 66
+    InstrukcjaCase                 go to state 67
+    InstrukcjaCaseStart            go to state 68
+    InstrukcjaCaseStartInstrukcja  go to state 69
+    InstrukcjaRepeat               go to state 70
+    InstrukcjaRepeatStart          go to state 71
+    InstrukcjaWhile                go to state 72
+    InstrukcjaWhileWyrazenie       go to state 73
+    InstrukcjaWhileStart           go to state 74
+    InstrukcjaIf                   go to state 75
+    IfWyrazenieInstrukcja          go to state 76
+    IfWyrazenie                    go to state 77
+    Ident                          go to state 78
+
+
+State 22
+
+    2 Cialo: ListaDeklaracji Blok .
+
+    $default  reduce using rule 2 (Cialo)
+
+
+State 23
+
+    5 ListaDeklaracji: Deklaracja ListaDeklaracji .
+
+    $default  reduce using rule 5 (ListaDeklaracji)
+
+
+State 24
+
+  108 DeklaracjaKlasy: CLASS Ident EXTENDS . Ident '{' ListaDeklaracji '}'
+
+    ID  shift, and go to state 16
+
+    Ident  go to state 79
+
+
+State 25
+
+   23 DeklaracjaFunkcji: FUNCTION Ident '(' . DeklaracjaArgumentow ')' ':' Typ Cialo
+
+    VAR  shift, and go to state 8
+
+    $default  reduce using rule 25 (DeklaracjaArgumentow)
+
+    ListaDeklaracjiZmiennej  go to state 80
+    DeklaracjaZmiennej       go to state 81
+    DeklaracjaArgumentow     go to state 82
+
+
+State 26
+
+   10 DeklaracjaTypu: TYPE Ident '=' . OpisTypu
+
+    ARRAY  shift, and go to state 83
+    ID     shift, and go to state 16
+    '{'    shift, and go to state 84
+
+    OpisTypu  go to state 85
+    Ident     go to state 86
+
+
+State 27
+
+   22 DeklaracjaZmiennej: VAR Ident ':' . Typ
+
+    INT      shift, and go to state 87
+    STRING   shift, and go to state 88
+    VOID     shift, and go to state 89
+    ID       shift, and go to state 16
+    REAL     shift, and go to state 90
+    BOOLEAN  shift, and go to state 91
+
+    Typ    go to state 92
+    Ident  go to state 93
+
+
+State 28
+
+   32 Instrukcja: DELETE . Wyrazenie ';'
+
+    NEW          shift, and go to state 30
+    NULL_        shift, and go to state 31
+    SUPER        shift, and go to state 34
+    THIS         shift, and go to state 35
+    OPER_UMINUS  shift, and go to state 38
+    OPER_UPLUS   shift, and go to state 39
+    ID           shift, and go to state 16
+    INT_VAL      shift, and go to state 40
+    REAL_VAL     shift, and go to state 41
+    STRING_VAL   shift, and go to state 42
+    TRUE         shift, and go to state 43
+    FALSE        shift, and go to state 44
+    '('          shift, and go to state 49
+    '!'          shift, and go to state 50
+
+    WyrazeniePodstawowe       go to state 54
+    WyrazeniePostfiksowe      go to state 94
+    WyrazenieUnarne           go to state 56
+    OperatorUnarny            go to state 57
+    WyrazenieMultiplikatywne  go to state 58
+    WyrazenieAddytywne        go to state 59
+    WyrazeniePorownania       go to state 60
+    WyrazenieLogiczne         go to state 61
+    Wyrazenie                 go to state 95
+    Ident                     go to state 78
+
+
+State 29
+
+  107 IfWyrazenie: IF . Wyrazenie
+
+    NEW          shift, and go to state 30
+    NULL_        shift, and go to state 31
+    SUPER        shift, and go to state 34
+    THIS         shift, and go to state 35
+    OPER_UMINUS  shift, and go to state 38
+    OPER_UPLUS   shift, and go to state 39
+    ID           shift, and go to state 16
+    INT_VAL      shift, and go to state 40
+    REAL_VAL     shift, and go to state 41
+    STRING_VAL   shift, and go to state 42
+    TRUE         shift, and go to state 43
+    FALSE        shift, and go to state 44
+    '('          shift, and go to state 49
+    '!'          shift, and go to state 50
+
+    WyrazeniePodstawowe       go to state 54
+    WyrazeniePostfiksowe      go to state 94
+    WyrazenieUnarne           go to state 56
+    OperatorUnarny            go to state 57
+    WyrazenieMultiplikatywne  go to state 58
+    WyrazenieAddytywne        go to state 59
+    WyrazeniePorownania       go to state 60
+    WyrazenieLogiczne         go to state 61
+    Wyrazenie                 go to state 96
+    Ident                     go to state 78
+
+
+State 30
+
+   81 Wyrazenie: NEW . Typ
+   82          | NEW . Typ '[' Wyrazenie ']'
+
+    INT      shift, and go to state 87
+    STRING   shift, and go to state 88
+    VOID     shift, and go to state 89
+    ID       shift, and go to state 16
+    REAL     shift, and go to state 90
+    BOOLEAN  shift, and go to state 91
+
+    Typ    go to state 97
+    Ident  go to state 93
+
+
+State 31
+
+   47 WyrazeniePodstawowe: NULL_ .
+
+    $default  reduce using rule 47 (WyrazeniePodstawowe)
+
+
+State 32
+
+   34 Instrukcja: READ . Ident ';'
+
+    ID  shift, and go to state 16
+
+    Ident  go to state 98
+
+
+State 33
+
+   36 Instrukcja: RETURN . Wyrazenie ';'
+   37           | RETURN . ';'
+
+    NEW          shift, and go to state 30
+    NULL_        shift, and go to state 31
+    SUPER        shift, and go to state 34
+    THIS         shift, and go to state 35
+    OPER_UMINUS  shift, and go to state 38
+    OPER_UPLUS   shift, and go to state 39
+    ID           shift, and go to state 16
+    INT_VAL      shift, and go to state 40
+    REAL_VAL     shift, and go to state 41
+    STRING_VAL   shift, and go to state 42
+    TRUE         shift, and go to state 43
+    FALSE        shift, and go to state 44
+    ';'          shift, and go to state 99
+    '('          shift, and go to state 49
+    '!'          shift, and go to state 50
+
+    WyrazeniePodstawowe       go to state 54
+    WyrazeniePostfiksowe      go to state 94
+    WyrazenieUnarne           go to state 56
+    OperatorUnarny            go to state 57
+    WyrazenieMultiplikatywne  go to state 58
+    WyrazenieAddytywne        go to state 59
+    WyrazeniePorownania       go to state 60
+    WyrazenieLogiczne         go to state 61
+    Wyrazenie                 go to state 100
+    Ident                     go to state 78
+
+
+State 34
+
+   46 WyrazeniePodstawowe: SUPER .
+
+    $default  reduce using rule 46 (WyrazeniePodstawowe)
+
+
+State 35
+
+   45 WyrazeniePodstawowe: THIS .
+
+    $default  reduce using rule 45 (WyrazeniePodstawowe)
+
+
+State 36
+
+  103 InstrukcjaWhileStart: WHILE .
+
+    $default  reduce using rule 103 (InstrukcjaWhileStart)
+
+
+State 37
+
+   35 Instrukcja: WRITE . Wyrazenie ';'
+
+    NEW          shift, and go to state 30
+    NULL_        shift, and go to state 31
+    SUPER        shift, and go to state 34
+    THIS         shift, and go to state 35
+    OPER_UMINUS  shift, and go to state 38
+    OPER_UPLUS   shift, and go to state 39
+    ID           shift, and go to state 16
+    INT_VAL      shift, and go to state 40
+    REAL_VAL     shift, and go to state 41
+    STRING_VAL   shift, and go to state 42
+    TRUE         shift, and go to state 43
+    FALSE        shift, and go to state 44
+    '('          shift, and go to state 49
+    '!'          shift, and go to state 50
+
+    WyrazeniePodstawowe       go to state 54
+    WyrazeniePostfiksowe      go to state 94
+    WyrazenieUnarne           go to state 56
+    OperatorUnarny            go to state 57
+    WyrazenieMultiplikatywne  go to state 58
+    WyrazenieAddytywne        go to state 59
+    WyrazeniePorownania       go to state 60
+    WyrazenieLogiczne         go to state 61
+    Wyrazenie                 go to state 101
+    Ident                     go to state 78
+
+
+State 38
+
+   58 OperatorUnarny: OPER_UMINUS .
+
+    $default  reduce using rule 58 (OperatorUnarny)
+
+
+State 39
+
+   59 OperatorUnarny: OPER_UPLUS .
+
+    $default  reduce using rule 59 (OperatorUnarny)
+
+
+State 40
+
+   40 WyrazeniePodstawowe: INT_VAL .
+
+    $default  reduce using rule 40 (WyrazeniePodstawowe)
+
+
+State 41
+
+   41 WyrazeniePodstawowe: REAL_VAL .
+
+    $default  reduce using rule 41 (WyrazeniePodstawowe)
+
+
+State 42
+
+   39 WyrazeniePodstawowe: STRING_VAL .
+
+    $default  reduce using rule 39 (WyrazeniePodstawowe)
+
+
+State 43
+
+   42 WyrazeniePodstawowe: TRUE .
+
+    $default  reduce using rule 42 (WyrazeniePodstawowe)
+
+
+State 44
+
+   43 WyrazeniePodstawowe: FALSE .
+
+    $default  reduce using rule 43 (WyrazeniePodstawowe)
+
+
+State 45
+
+  100 InstrukcjaRepeatStart: REPEAT .
+
+    $default  reduce using rule 100 (InstrukcjaRepeatStart)
+
+
+State 46
+
+   89 InstrukcjaForAss: FOR . InstrukcjaForId OPER_ASSIGN Wyrazenie
+
+    ID  shift, and go to state 16
+
+    InstrukcjaForId  go to state 102
+    Ident            go to state 103
+
+
+State 47
+
+   96 InstrukcjaCaseStart: CASE . Ident OF Wyrazenie
+
+    ID  shift, and go to state 16
+
+    Ident  go to state 104
+
+
+State 48
+
+   33 Instrukcja: ';' .
+
+    $default  reduce using rule 33 (Instrukcja)
+
+
+State 49
+
+   44 WyrazeniePodstawowe: '(' . Wyrazenie ')'
+
+    NEW          shift, and go to state 30
+    NULL_        shift, and go to state 31
+    SUPER        shift, and go to state 34
+    THIS         shift, and go to state 35
+    OPER_UMINUS  shift, and go to state 38
+    OPER_UPLUS   shift, and go to state 39
+    ID           shift, and go to state 16
+    INT_VAL      shift, and go to state 40
+    REAL_VAL     shift, and go to state 41
+    STRING_VAL   shift, and go to state 42
+    TRUE         shift, and go to state 43
+    FALSE        shift, and go to state 44
+    '('          shift, and go to state 49
+    '!'          shift, and go to state 50
+
+    WyrazeniePodstawowe       go to state 54
+    WyrazeniePostfiksowe      go to state 94
+    WyrazenieUnarne           go to state 56
+    OperatorUnarny            go to state 57
+    WyrazenieMultiplikatywne  go to state 58
+    WyrazenieAddytywne        go to state 59
+    WyrazeniePorownania       go to state 60
+    WyrazenieLogiczne         go to state 61
+    Wyrazenie                 go to state 105
+    Ident                     go to state 78
+
+
+State 50
+
+   60 OperatorUnarny: '!' .
+
+    $default  reduce using rule 60 (OperatorUnarny)
+
+
+State 51
+
+   31 Instrukcja: Blok .
+
+    $default  reduce using rule 31 (Instrukcja)
+
+
+State 52
+
+    3 Blok: '{' ListaInstrukcji . '}'
+
+    '}'  shift, and go to state 106
+
+
+State 53
+
+   27 ListaInstrukcji: Instrukcja . ListaInstrukcji
+
+    DELETE       shift, and go to state 28
+    IF           shift, and go to state 29
+    NEW          shift, and go to state 30
+    NULL_        shift, and go to state 31
+    READ         shift, and go to state 32
+    RETURN       shift, and go to state 33
+    SUPER        shift, and go to state 34
+    THIS         shift, and go to state 35
+    WHILE        shift, and go to state 36
+    WRITE        shift, and go to state 37
+    OPER_UMINUS  shift, and go to state 38
+    OPER_UPLUS   shift, and go to state 39
+    ID           shift, and go to state 16
+    INT_VAL      shift, and go to state 40
+    REAL_VAL     shift, and go to state 41
+    STRING_VAL   shift, and go to state 42
+    TRUE         shift, and go to state 43
+    FALSE        shift, and go to state 44
+    REPEAT       shift, and go to state 45
+    FOR          shift, and go to state 46
+    CASE         shift, and go to state 47
+    ';'          shift, and go to state 48
+    '{'          shift, and go to state 21
+    '('          shift, and go to state 49
+    '!'          shift, and go to state 50
+
+    $default  reduce using rule 26 (ListaInstrukcji)
+
+    Blok                           go to state 51
+    ListaInstrukcji                go to state 107
+    Instrukcja                     go to state 53
+    WyrazeniePodstawowe            go to state 54
+    WyrazeniePostfiksowe           go to state 55
+    WyrazenieUnarne                go to state 56
+    OperatorUnarny                 go to state 57
+    WyrazenieMultiplikatywne       go to state 58
+    WyrazenieAddytywne             go to state 59
+    WyrazeniePorownania            go to state 60
+    WyrazenieLogiczne              go to state 61
+    Wyrazenie                      go to state 62
+    ZlozonaInstrukcja              go to state 63
+    InstrukcjaForAss               go to state 64
+    InstrukcjaForStart             go to state 65
+    InstrukcjaFor                  go to state 66
+    InstrukcjaCase                 go to state 67
+    InstrukcjaCaseStart            go to state 68
+    InstrukcjaCaseStartInstrukcja  go to state 69
+    InstrukcjaRepeat               go to state 70
+    InstrukcjaRepeatStart          go to state 71
+    InstrukcjaWhile                go to state 72
+    InstrukcjaWhileWyrazenie       go to state 73
+    InstrukcjaWhileStart           go to state 74
+    InstrukcjaIf                   go to state 75
+    IfWyrazenieInstrukcja          go to state 76
+    IfWyrazenie                    go to state 77
+    Ident                          go to state 78
+
+
+State 54
+
+   51 WyrazeniePostfiksowe: WyrazeniePodstawowe .
+
+    $default  reduce using rule 51 (WyrazeniePostfiksowe)
+
+
+State 55
+
+   30 Instrukcja: WyrazeniePostfiksowe . OPER_ASSIGN Wyrazenie ';'
+   48 WyrazeniePostfiksowe: WyrazeniePostfiksowe . '[' Wyrazenie ']'
+   49                     | WyrazeniePostfiksowe . '(' Parametry ')'
+   50                     | WyrazeniePostfiksowe . '.' Ident
+   57 WyrazenieUnarne: WyrazeniePostfiksowe .
+
+    OPER_ASSIGN  shift, and go to state 108
+    '('          shift, and go to state 109
+    '['          shift, and go to state 110
+    '.'          shift, and go to state 111
+
+    $default  reduce using rule 57 (WyrazenieUnarne)
+
+
+State 56
+
+   62 WyrazenieMultiplikatywne: WyrazenieUnarne .
+
+    $default  reduce using rule 62 (WyrazenieMultiplikatywne)
+
+
+State 57
+
+   56 WyrazenieUnarne: OperatorUnarny . WyrazenieUnarne
+
+    NULL_        shift, and go to state 31
+    SUPER        shift, and go to state 34
+    THIS         shift, and go to state 35
+    OPER_UMINUS  shift, and go to state 38
+    OPER_UPLUS   shift, and go to state 39
+    ID           shift, and go to state 16
+    INT_VAL      shift, and go to state 40
+    REAL_VAL     shift, and go to state 41
+    STRING_VAL   shift, and go to state 42
+    TRUE         shift, and go to state 43
+    FALSE        shift, and go to state 44
+    '('          shift, and go to state 49
+    '!'          shift, and go to state 50
+
+    WyrazeniePodstawowe   go to state 54
+    WyrazeniePostfiksowe  go to state 94
+    WyrazenieUnarne       go to state 112
+    OperatorUnarny        go to state 57
+    Ident                 go to state 78
+
+
+State 58
+
+   61 WyrazenieMultiplikatywne: WyrazenieMultiplikatywne . OperatorMultiplikatywny WyrazenieUnarne
+   64 WyrazenieAddytywne: WyrazenieMultiplikatywne .
+
+    '*'  shift, and go to state 113
+    '/'  shift, and go to state 114
+
+    $default  reduce using rule 64 (WyrazenieAddytywne)
+
+    OperatorMultiplikatywny  go to state 115
+
+
+State 59
+
+   63 WyrazenieAddytywne: WyrazenieAddytywne . OperatorAddytywny WyrazenieMultiplikatywne
+   69 WyrazeniePorownania: WyrazenieAddytywne . OperatorPorownania WyrazenieAddytywne
+   70                    | WyrazenieAddytywne .
+
+    OPER_EQUAL     shift, and go to state 116
+    OPER_NEQUAL    shift, and go to state 117
+    OPER_GREATER   shift, and go to state 118
+    OPER_LESSER    shift, and go to state 119
+    OPER_ELESSER   shift, and go to state 120
+    OPER_EGREATER  shift, and go to state 121
+    '+'            shift, and go to state 122
+    '-'            shift, and go to state 123
+
+    $default  reduce using rule 70 (WyrazeniePorownania)
+
+    OperatorAddytywny   go to state 124
+    OperatorPorownania  go to state 125
+
+
+State 60
+
+   77 WyrazenieLogiczne: WyrazeniePorownania . OPER_OR WyrazeniePorownania
+   78                  | WyrazeniePorownania . OPER_AND WyrazeniePorownania
+   79                  | WyrazeniePorownania .
+
+    OPER_AND  shift, and go to state 126
+    OPER_OR   shift, and go to state 127
+
+    $default  reduce using rule 79 (WyrazenieLogiczne)
+
+
+State 61
+
+   80 Wyrazenie: WyrazenieLogiczne .
+
+    $default  reduce using rule 80 (Wyrazenie)
+
+
+State 62
+
+   28 Instrukcja: Wyrazenie . ';'
+
+    ';'  shift, and go to state 128
+
+
+State 63
+
+   29 Instrukcja: ZlozonaInstrukcja . ';'
+
+    ';'  shift, and go to state 129
+
+
+State 64
+
+   92 InstrukcjaForStart: InstrukcjaForAss . TO_DOWNTO Wyrazenie
+
+    TO      shift, and go to state 130
+    DOWNTO  shift, and go to state 131
+
+    TO_DOWNTO  go to state 132
+
+
+State 65
+
+   93 InstrukcjaFor: InstrukcjaForStart . DO Instrukcja
+
+    DO  shift, and go to state 133
+
+
+State 66
+
+   87 ZlozonaInstrukcja: InstrukcjaFor .
+
+    $default  reduce using rule 87 (ZlozonaInstrukcja)
+
+
+State 67
+
+   86 ZlozonaInstrukcja: InstrukcjaCase .
+
+    $default  reduce using rule 86 (ZlozonaInstrukcja)
+
+
+State 68
+
+   98 InstrukcjaCaseStartInstrukcja: InstrukcjaCaseStart . ':' Instrukcja
+
+    ':'  shift, and go to state 134
+
+
+State 69
+
+   94 InstrukcjaCase: InstrukcjaCaseStartInstrukcja . ELSE Instrukcja
+   95               | InstrukcjaCaseStartInstrukcja .
+   97 InstrukcjaCaseStart: InstrukcjaCaseStartInstrukcja . Wyrazenie
+
+    ELSE         shift, and go to state 135
+    NEW          shift, and go to state 30
+    NULL_        shift, and go to state 31
+    SUPER        shift, and go to state 34
+    THIS         shift, and go to state 35
+    OPER_UMINUS  shift, and go to state 38
+    OPER_UPLUS   shift, and go to state 39
+    ID           shift, and go to state 16
+    INT_VAL      shift, and go to state 40
+    REAL_VAL     shift, and go to state 41
+    STRING_VAL   shift, and go to state 42
+    TRUE         shift, and go to state 43
+    FALSE        shift, and go to state 44
+    '('          shift, and go to state 49
+    '!'          shift, and go to state 50
+
+    $default  reduce using rule 95 (InstrukcjaCase)
+
+    WyrazeniePodstawowe       go to state 54
+    WyrazeniePostfiksowe      go to state 94
+    WyrazenieUnarne           go to state 56
+    OperatorUnarny            go to state 57
+    WyrazenieMultiplikatywne  go to state 58
+    WyrazenieAddytywne        go to state 59
+    WyrazeniePorownania       go to state 60
+    WyrazenieLogiczne         go to state 61
+    Wyrazenie                 go to state 136
+    Ident                     go to state 78
+
+
+State 70
+
+   85 ZlozonaInstrukcja: InstrukcjaRepeat .
+
+    $default  reduce using rule 85 (ZlozonaInstrukcja)
+
+
+State 71
+
+   99 InstrukcjaRepeat: InstrukcjaRepeatStart . Instrukcja UNTIL Wyrazenie
+
+    DELETE       shift, and go to state 28
+    IF           shift, and go to state 29
+    NEW          shift, and go to state 30
+    NULL_        shift, and go to state 31
+    READ         shift, and go to state 32
+    RETURN       shift, and go to state 33
+    SUPER        shift, and go to state 34
+    THIS         shift, and go to state 35
+    WHILE        shift, and go to state 36
+    WRITE        shift, and go to state 37
+    OPER_UMINUS  shift, and go to state 38
+    OPER_UPLUS   shift, and go to state 39
+    ID           shift, and go to state 16
+    INT_VAL      shift, and go to state 40
+    REAL_VAL     shift, and go to state 41
+    STRING_VAL   shift, and go to state 42
+    TRUE         shift, and go to state 43
+    FALSE        shift, and go to state 44
+    REPEAT       shift, and go to state 45
+    FOR          shift, and go to state 46
+    CASE         shift, and go to state 47
+    ';'          shift, and go to state 48
+    '{'          shift, and go to state 21
+    '('          shift, and go to state 49
+    '!'          shift, and go to state 50
+
+    Blok                           go to state 51
+    Instrukcja                     go to state 137
+    WyrazeniePodstawowe            go to state 54
+    WyrazeniePostfiksowe           go to state 55
+    WyrazenieUnarne                go to state 56
+    OperatorUnarny                 go to state 57
+    WyrazenieMultiplikatywne       go to state 58
+    WyrazenieAddytywne             go to state 59
+    WyrazeniePorownania            go to state 60
+    WyrazenieLogiczne              go to state 61
+    Wyrazenie                      go to state 62
+    ZlozonaInstrukcja              go to state 63
+    InstrukcjaForAss               go to state 64
+    InstrukcjaForStart             go to state 65
+    InstrukcjaFor                  go to state 66
+    InstrukcjaCase                 go to state 67
+    InstrukcjaCaseStart            go to state 68
+    InstrukcjaCaseStartInstrukcja  go to state 69
+    InstrukcjaRepeat               go to state 70
+    InstrukcjaRepeatStart          go to state 71
+    InstrukcjaWhile                go to state 72
+    InstrukcjaWhileWyrazenie       go to state 73
+    InstrukcjaWhileStart           go to state 74
+    InstrukcjaIf                   go to state 75
+    IfWyrazenieInstrukcja          go to state 76
+    IfWyrazenie                    go to state 77
+    Ident                          go to state 78
+
+
+State 72
+
+   84 ZlozonaInstrukcja: InstrukcjaWhile .
+
+    $default  reduce using rule 84 (ZlozonaInstrukcja)
+
+
+State 73
+
+  101 InstrukcjaWhile: InstrukcjaWhileWyrazenie . DO Instrukcja DONE
+
+    DO  shift, and go to state 138
+
+
+State 74
+
+  102 InstrukcjaWhileWyrazenie: InstrukcjaWhileStart . Wyrazenie
+
+    NEW          shift, and go to state 30
+    NULL_        shift, and go to state 31
+    SUPER        shift, and go to state 34
+    THIS         shift, and go to state 35
+    OPER_UMINUS  shift, and go to state 38
+    OPER_UPLUS   shift, and go to state 39
+    ID           shift, and go to state 16
+    INT_VAL      shift, and go to state 40
+    REAL_VAL     shift, and go to state 41
+    STRING_VAL   shift, and go to state 42
+    TRUE         shift, and go to state 43
+    FALSE        shift, and go to state 44
+    '('          shift, and go to state 49
+    '!'          shift, and go to state 50
+
+    WyrazeniePodstawowe       go to state 54
+    WyrazeniePostfiksowe      go to state 94
+    WyrazenieUnarne           go to state 56
+    OperatorUnarny            go to state 57
+    WyrazenieMultiplikatywne  go to state 58
+    WyrazenieAddytywne        go to state 59
+    WyrazeniePorownania       go to state 60
+    WyrazenieLogiczne         go to state 61
+    Wyrazenie                 go to state 139
+    Ident                     go to state 78
+
+
+State 75
+
+   83 ZlozonaInstrukcja: InstrukcjaIf .
+
+    $default  reduce using rule 83 (ZlozonaInstrukcja)
+
+
+State 76
+
+  104 InstrukcjaIf: IfWyrazenieInstrukcja . ELSE Instrukcja ENDIF
+
+    ELSE  shift, and go to state 140
+
+
+State 77
+
+  105 InstrukcjaIf: IfWyrazenie . THEN ListaInstrukcji ENDIF
+  106 IfWyrazenieInstrukcja: IfWyrazenie . THEN Instrukcja
+
+    THEN  shift, and go to state 141
+
+
+State 78
+
+   38 WyrazeniePodstawowe: Ident .
+
+    $default  reduce using rule 38 (WyrazeniePodstawowe)
+
+
+State 79
+
+  108 DeklaracjaKlasy: CLASS Ident EXTENDS Ident . '{' ListaDeklaracji '}'
+
+    '{'  shift, and go to state 142
+
+
+State 80
+
+   24 DeklaracjaArgumentow: ListaDeklaracjiZmiennej .
+
+    $default  reduce using rule 24 (DeklaracjaArgumentow)
+
+
+State 81
+
+   14 ListaDeklaracjiZmiennej: DeklaracjaZmiennej .
+   15                        | DeklaracjaZmiennej . ',' ListaDeklaracjiZmiennej
+
+    ','  shift, and go to state 143
+
+    $default  reduce using rule 14 (ListaDeklaracjiZmiennej)
+
+
+State 82
+
+   23 DeklaracjaFunkcji: FUNCTION Ident '(' DeklaracjaArgumentow . ')' ':' Typ Cialo
+
+    ')'  shift, and go to state 144
+
+
+State 83
+
+   13 OpisTypu: ARRAY . OF Typ
+
+    OF  shift, and go to state 145
+
+
+State 84
+
+   12 OpisTypu: '{' . ListaDeklaracjiZmiennej '}'
+
+    VAR  shift, and go to state 8
+
+    ListaDeklaracjiZmiennej  go to state 146
+    DeklaracjaZmiennej       go to state 81
+
+
+State 85
+
+   10 DeklaracjaTypu: TYPE Ident '=' OpisTypu .
+
+    $default  reduce using rule 10 (DeklaracjaTypu)
+
+
+State 86
+
+   11 OpisTypu: Ident .
+
+    $default  reduce using rule 11 (OpisTypu)
+
+
+State 87
+
+   18 Typ: INT .
+
+    $default  reduce using rule 18 (Typ)
+
+
+State 88
+
+   17 Typ: STRING .
+
+    $default  reduce using rule 17 (Typ)
+
+
+State 89
+
+   19 Typ: VOID .
+
+    $default  reduce using rule 19 (Typ)
+
+
+State 90
+
+   20 Typ: REAL .
+
+    $default  reduce using rule 20 (Typ)
+
+
+State 91
+
+   21 Typ: BOOLEAN .
+
+    $default  reduce using rule 21 (Typ)
+
+
+State 92
+
+   22 DeklaracjaZmiennej: VAR Ident ':' Typ .
+
+    $default  reduce using rule 22 (DeklaracjaZmiennej)
+
+
+State 93
+
+   16 Typ: Ident .
+
+    $default  reduce using rule 16 (Typ)
+
+
+State 94
+
+   48 WyrazeniePostfiksowe: WyrazeniePostfiksowe . '[' Wyrazenie ']'
+   49                     | WyrazeniePostfiksowe . '(' Parametry ')'
+   50                     | WyrazeniePostfiksowe . '.' Ident
+   57 WyrazenieUnarne: WyrazeniePostfiksowe .
+
+    '('  shift, and go to state 109
+    '['  shift, and go to state 110
+    '.'  shift, and go to state 111
+
+    $default  reduce using rule 57 (WyrazenieUnarne)
+
+
+State 95
+
+   32 Instrukcja: DELETE Wyrazenie . ';'
+
+    ';'  shift, and go to state 147
+
+
+State 96
+
+  107 IfWyrazenie: IF Wyrazenie .
+
+    $default  reduce using rule 107 (IfWyrazenie)
+
+
+State 97
+
+   81 Wyrazenie: NEW Typ .
+   82          | NEW Typ . '[' Wyrazenie ']'
+
+    '['  shift, and go to state 148
+
+    $default  reduce using rule 81 (Wyrazenie)
+
+
+State 98
+
+   34 Instrukcja: READ Ident . ';'
+
+    ';'  shift, and go to state 149
+
+
+State 99
+
+   37 Instrukcja: RETURN ';' .
+
+    $default  reduce using rule 37 (Instrukcja)
+
+
+State 100
+
+   36 Instrukcja: RETURN Wyrazenie . ';'
+
+    ';'  shift, and go to state 150
+
+
+State 101
+
+   35 Instrukcja: WRITE Wyrazenie . ';'
+
+    ';'  shift, and go to state 151
+
+
+State 102
+
+   89 InstrukcjaForAss: FOR InstrukcjaForId . OPER_ASSIGN Wyrazenie
+
+    OPER_ASSIGN  shift, and go to state 152
+
+
+State 103
+
+   88 InstrukcjaForId: Ident .
+
+    $default  reduce using rule 88 (InstrukcjaForId)
+
+
+State 104
+
+   96 InstrukcjaCaseStart: CASE Ident . OF Wyrazenie
+
+    OF  shift, and go to state 153
+
+
+State 105
+
+   44 WyrazeniePodstawowe: '(' Wyrazenie . ')'
+
+    ')'  shift, and go to state 154
+
+
+State 106
+
+    3 Blok: '{' ListaInstrukcji '}' .
+
+    $default  reduce using rule 3 (Blok)
+
+
+State 107
+
+   27 ListaInstrukcji: Instrukcja ListaInstrukcji .
+
+    $default  reduce using rule 27 (ListaInstrukcji)
+
+
+State 108
+
+   30 Instrukcja: WyrazeniePostfiksowe OPER_ASSIGN . Wyrazenie ';'
+
+    NEW          shift, and go to state 30
+    NULL_        shift, and go to state 31
+    SUPER        shift, and go to state 34
+    THIS         shift, and go to state 35
+    OPER_UMINUS  shift, and go to state 38
+    OPER_UPLUS   shift, and go to state 39
+    ID           shift, and go to state 16
+    INT_VAL      shift, and go to state 40
+    REAL_VAL     shift, and go to state 41
+    STRING_VAL   shift, and go to state 42
+    TRUE         shift, and go to state 43
+    FALSE        shift, and go to state 44
+    '('          shift, and go to state 49
+    '!'          shift, and go to state 50
+
+    WyrazeniePodstawowe       go to state 54
+    WyrazeniePostfiksowe      go to state 94
+    WyrazenieUnarne           go to state 56
+    OperatorUnarny            go to state 57
+    WyrazenieMultiplikatywne  go to state 58
+    WyrazenieAddytywne        go to state 59
+    WyrazeniePorownania       go to state 60
+    WyrazenieLogiczne         go to state 61
+    Wyrazenie                 go to state 155
+    Ident                     go to state 78
+
+
+State 109
+
+   49 WyrazeniePostfiksowe: WyrazeniePostfiksowe '(' . Parametry ')'
+
+    NEW          shift, and go to state 30
+    NULL_        shift, and go to state 31
+    SUPER        shift, and go to state 34
+    THIS         shift, and go to state 35
+    OPER_UMINUS  shift, and go to state 38
+    OPER_UPLUS   shift, and go to state 39
+    ID           shift, and go to state 16
+    INT_VAL      shift, and go to state 40
+    REAL_VAL     shift, and go to state 41
+    STRING_VAL   shift, and go to state 42
+    TRUE         shift, and go to state 43
+    FALSE        shift, and go to state 44
+    '('          shift, and go to state 49
+    '!'          shift, and go to state 50
+
+    $default  reduce using rule 52 (Parametry)
+
+    WyrazeniePodstawowe       go to state 54
+    WyrazeniePostfiksowe      go to state 94
+    Parametry                 go to state 156
+    ListaWyrazen              go to state 157
+    WyrazenieUnarne           go to state 56
+    OperatorUnarny            go to state 57
+    WyrazenieMultiplikatywne  go to state 58
+    WyrazenieAddytywne        go to state 59
+    WyrazeniePorownania       go to state 60
+    WyrazenieLogiczne         go to state 61
+    Wyrazenie                 go to state 158
+    Ident                     go to state 78
+
+
+State 110
+
+   48 WyrazeniePostfiksowe: WyrazeniePostfiksowe '[' . Wyrazenie ']'
+
+    NEW          shift, and go to state 30
+    NULL_        shift, and go to state 31
+    SUPER        shift, and go to state 34
+    THIS         shift, and go to state 35
+    OPER_UMINUS  shift, and go to state 38
+    OPER_UPLUS   shift, and go to state 39
+    ID           shift, and go to state 16
+    INT_VAL      shift, and go to state 40
+    REAL_VAL     shift, and go to state 41
+    STRING_VAL   shift, and go to state 42
+    TRUE         shift, and go to state 43
+    FALSE        shift, and go to state 44
+    '('          shift, and go to state 49
+    '!'          shift, and go to state 50
+
+    WyrazeniePodstawowe       go to state 54
+    WyrazeniePostfiksowe      go to state 94
+    WyrazenieUnarne           go to state 56
+    OperatorUnarny            go to state 57
+    WyrazenieMultiplikatywne  go to state 58
+    WyrazenieAddytywne        go to state 59
+    WyrazeniePorownania       go to state 60
+    WyrazenieLogiczne         go to state 61
+    Wyrazenie                 go to state 159
+    Ident                     go to state 78
+
+
+State 111
+
+   50 WyrazeniePostfiksowe: WyrazeniePostfiksowe '.' . Ident
+
+    ID  shift, and go to state 16
+
+    Ident  go to state 160
+
+
+State 112
+
+   56 WyrazenieUnarne: OperatorUnarny WyrazenieUnarne .
+
+    $default  reduce using rule 56 (WyrazenieUnarne)
+
+
+State 113
+
+   65 OperatorMultiplikatywny: '*' .
+
+    $default  reduce using rule 65 (OperatorMultiplikatywny)
+
+
+State 114
+
+   66 OperatorMultiplikatywny: '/' .
+
+    $default  reduce using rule 66 (OperatorMultiplikatywny)
+
+
+State 115
+
+   61 WyrazenieMultiplikatywne: WyrazenieMultiplikatywne OperatorMultiplikatywny . WyrazenieUnarne
+
+    NULL_        shift, and go to state 31
+    SUPER        shift, and go to state 34
+    THIS         shift, and go to state 35
+    OPER_UMINUS  shift, and go to state 38
+    OPER_UPLUS   shift, and go to state 39
+    ID           shift, and go to state 16
+    INT_VAL      shift, and go to state 40
+    REAL_VAL     shift, and go to state 41
+    STRING_VAL   shift, and go to state 42
+    TRUE         shift, and go to state 43
+    FALSE        shift, and go to state 44
+    '('          shift, and go to state 49
+    '!'          shift, and go to state 50
+
+    WyrazeniePodstawowe   go to state 54
+    WyrazeniePostfiksowe  go to state 94
+    WyrazenieUnarne       go to state 161
+    OperatorUnarny        go to state 57
+    Ident                 go to state 78
+
+
+State 116
+
+   75 OperatorPorownania: OPER_EQUAL .
+
+    $default  reduce using rule 75 (OperatorPorownania)
+
+
+State 117
+
+   76 OperatorPorownania: OPER_NEQUAL .
+
+    $default  reduce using rule 76 (OperatorPorownania)
+
+
+State 118
+
+   72 OperatorPorownania: OPER_GREATER .
+
+    $default  reduce using rule 72 (OperatorPorownania)
+
+
+State 119
+
+   71 OperatorPorownania: OPER_LESSER .
+
+    $default  reduce using rule 71 (OperatorPorownania)
+
+
+State 120
+
+   73 OperatorPorownania: OPER_ELESSER .
+
+    $default  reduce using rule 73 (OperatorPorownania)
+
+
+State 121
+
+   74 OperatorPorownania: OPER_EGREATER .
+
+    $default  reduce using rule 74 (OperatorPorownania)
+
+
+State 122
+
+   67 OperatorAddytywny: '+' .
+
+    $default  reduce using rule 67 (OperatorAddytywny)
+
+
+State 123
+
+   68 OperatorAddytywny: '-' .
+
+    $default  reduce using rule 68 (OperatorAddytywny)
+
+
+State 124
+
+   63 WyrazenieAddytywne: WyrazenieAddytywne OperatorAddytywny . WyrazenieMultiplikatywne
+
+    NULL_        shift, and go to state 31
+    SUPER        shift, and go to state 34
+    THIS         shift, and go to state 35
+    OPER_UMINUS  shift, and go to state 38
+    OPER_UPLUS   shift, and go to state 39
+    ID           shift, and go to state 16
+    INT_VAL      shift, and go to state 40
+    REAL_VAL     shift, and go to state 41
+    STRING_VAL   shift, and go to state 42
+    TRUE         shift, and go to state 43
+    FALSE        shift, and go to state 44
+    '('          shift, and go to state 49
+    '!'          shift, and go to state 50
+
+    WyrazeniePodstawowe       go to state 54
+    WyrazeniePostfiksowe      go to state 94
+    WyrazenieUnarne           go to state 56
+    OperatorUnarny            go to state 57
+    WyrazenieMultiplikatywne  go to state 162
+    Ident                     go to state 78
+
+
+State 125
+
+   69 WyrazeniePorownania: WyrazenieAddytywne OperatorPorownania . WyrazenieAddytywne
+
+    NULL_        shift, and go to state 31
+    SUPER        shift, and go to state 34
+    THIS         shift, and go to state 35
+    OPER_UMINUS  shift, and go to state 38
+    OPER_UPLUS   shift, and go to state 39
+    ID           shift, and go to state 16
+    INT_VAL      shift, and go to state 40
+    REAL_VAL     shift, and go to state 41
+    STRING_VAL   shift, and go to state 42
+    TRUE         shift, and go to state 43
+    FALSE        shift, and go to state 44
+    '('          shift, and go to state 49
+    '!'          shift, and go to state 50
+
+    WyrazeniePodstawowe       go to state 54
+    WyrazeniePostfiksowe      go to state 94
+    WyrazenieUnarne           go to state 56
+    OperatorUnarny            go to state 57
+    WyrazenieMultiplikatywne  go to state 58
+    WyrazenieAddytywne        go to state 163
+    Ident                     go to state 78
+
+
+State 126
+
+   78 WyrazenieLogiczne: WyrazeniePorownania OPER_AND . WyrazeniePorownania
+
+    NULL_        shift, and go to state 31
+    SUPER        shift, and go to state 34
+    THIS         shift, and go to state 35
+    OPER_UMINUS  shift, and go to state 38
+    OPER_UPLUS   shift, and go to state 39
+    ID           shift, and go to state 16
+    INT_VAL      shift, and go to state 40
+    REAL_VAL     shift, and go to state 41
+    STRING_VAL   shift, and go to state 42
+    TRUE         shift, and go to state 43
+    FALSE        shift, and go to state 44
+    '('          shift, and go to state 49
+    '!'          shift, and go to state 50
+
+    WyrazeniePodstawowe       go to state 54
+    WyrazeniePostfiksowe      go to state 94
+    WyrazenieUnarne           go to state 56
+    OperatorUnarny            go to state 57
+    WyrazenieMultiplikatywne  go to state 58
+    WyrazenieAddytywne        go to state 59
+    WyrazeniePorownania       go to state 164
+    Ident                     go to state 78
+
+
+State 127
+
+   77 WyrazenieLogiczne: WyrazeniePorownania OPER_OR . WyrazeniePorownania
+
+    NULL_        shift, and go to state 31
+    SUPER        shift, and go to state 34
+    THIS         shift, and go to state 35
+    OPER_UMINUS  shift, and go to state 38
+    OPER_UPLUS   shift, and go to state 39
+    ID           shift, and go to state 16
+    INT_VAL      shift, and go to state 40
+    REAL_VAL     shift, and go to state 41
+    STRING_VAL   shift, and go to state 42
+    TRUE         shift, and go to state 43
+    FALSE        shift, and go to state 44
+    '('          shift, and go to state 49
+    '!'          shift, and go to state 50
+
+    WyrazeniePodstawowe       go to state 54
+    WyrazeniePostfiksowe      go to state 94
+    WyrazenieUnarne           go to state 56
+    OperatorUnarny            go to state 57
+    WyrazenieMultiplikatywne  go to state 58
+    WyrazenieAddytywne        go to state 59
+    WyrazeniePorownania       go to state 165
+    Ident                     go to state 78
+
+
+State 128
+
+   28 Instrukcja: Wyrazenie ';' .
+
+    $default  reduce using rule 28 (Instrukcja)
+
+
+State 129
+
+   29 Instrukcja: ZlozonaInstrukcja ';' .
+
+    $default  reduce using rule 29 (Instrukcja)
+
+
+State 130
+
+   90 TO_DOWNTO: TO .
+
+    $default  reduce using rule 90 (TO_DOWNTO)
+
+
+State 131
+
+   91 TO_DOWNTO: DOWNTO .
+
+    $default  reduce using rule 91 (TO_DOWNTO)
+
+
+State 132
+
+   92 InstrukcjaForStart: InstrukcjaForAss TO_DOWNTO . Wyrazenie
+
+    NEW          shift, and go to state 30
+    NULL_        shift, and go to state 31
+    SUPER        shift, and go to state 34
+    THIS         shift, and go to state 35
+    OPER_UMINUS  shift, and go to state 38
+    OPER_UPLUS   shift, and go to state 39
+    ID           shift, and go to state 16
+    INT_VAL      shift, and go to state 40
+    REAL_VAL     shift, and go to state 41
+    STRING_VAL   shift, and go to state 42
+    TRUE         shift, and go to state 43
+    FALSE        shift, and go to state 44
+    '('          shift, and go to state 49
+    '!'          shift, and go to state 50
+
+    WyrazeniePodstawowe       go to state 54
+    WyrazeniePostfiksowe      go to state 94
+    WyrazenieUnarne           go to state 56
+    OperatorUnarny            go to state 57
+    WyrazenieMultiplikatywne  go to state 58
+    WyrazenieAddytywne        go to state 59
+    WyrazeniePorownania       go to state 60
+    WyrazenieLogiczne         go to state 61
+    Wyrazenie                 go to state 166
+    Ident                     go to state 78
+
+
+State 133
+
+   93 InstrukcjaFor: InstrukcjaForStart DO . Instrukcja
+
+    DELETE       shift, and go to state 28
+    IF           shift, and go to state 29
+    NEW          shift, and go to state 30
+    NULL_        shift, and go to state 31
+    READ         shift, and go to state 32
+    RETURN       shift, and go to state 33
+    SUPER        shift, and go to state 34
+    THIS         shift, and go to state 35
+    WHILE        shift, and go to state 36
+    WRITE        shift, and go to state 37
+    OPER_UMINUS  shift, and go to state 38
+    OPER_UPLUS   shift, and go to state 39
+    ID           shift, and go to state 16
+    INT_VAL      shift, and go to state 40
+    REAL_VAL     shift, and go to state 41
+    STRING_VAL   shift, and go to state 42
+    TRUE         shift, and go to state 43
+    FALSE        shift, and go to state 44
+    REPEAT       shift, and go to state 45
+    FOR          shift, and go to state 46
+    CASE         shift, and go to state 47
+    ';'          shift, and go to state 48
+    '{'          shift, and go to state 21
+    '('          shift, and go to state 49
+    '!'          shift, and go to state 50
+
+    Blok                           go to state 51
+    Instrukcja                     go to state 167
+    WyrazeniePodstawowe            go to state 54
+    WyrazeniePostfiksowe           go to state 55
+    WyrazenieUnarne                go to state 56
+    OperatorUnarny                 go to state 57
+    WyrazenieMultiplikatywne       go to state 58
+    WyrazenieAddytywne             go to state 59
+    WyrazeniePorownania            go to state 60
+    WyrazenieLogiczne              go to state 61
+    Wyrazenie                      go to state 62
+    ZlozonaInstrukcja              go to state 63
+    InstrukcjaForAss               go to state 64
+    InstrukcjaForStart             go to state 65
+    InstrukcjaFor                  go to state 66
+    InstrukcjaCase                 go to state 67
+    InstrukcjaCaseStart            go to state 68
+    InstrukcjaCaseStartInstrukcja  go to state 69
+    InstrukcjaRepeat               go to state 70
+    InstrukcjaRepeatStart          go to state 71
+    InstrukcjaWhile                go to state 72
+    InstrukcjaWhileWyrazenie       go to state 73
+    InstrukcjaWhileStart           go to state 74
+    InstrukcjaIf                   go to state 75
+    IfWyrazenieInstrukcja          go to state 76
+    IfWyrazenie                    go to state 77
+    Ident                          go to state 78
+
+
+State 134
+
+   98 InstrukcjaCaseStartInstrukcja: InstrukcjaCaseStart ':' . Instrukcja
+
+    DELETE       shift, and go to state 28
+    IF           shift, and go to state 29
+    NEW          shift, and go to state 30
+    NULL_        shift, and go to state 31
+    READ         shift, and go to state 32
+    RETURN       shift, and go to state 33
+    SUPER        shift, and go to state 34
+    THIS         shift, and go to state 35
+    WHILE        shift, and go to state 36
+    WRITE        shift, and go to state 37
+    OPER_UMINUS  shift, and go to state 38
+    OPER_UPLUS   shift, and go to state 39
+    ID           shift, and go to state 16
+    INT_VAL      shift, and go to state 40
+    REAL_VAL     shift, and go to state 41
+    STRING_VAL   shift, and go to state 42
+    TRUE         shift, and go to state 43
+    FALSE        shift, and go to state 44
+    REPEAT       shift, and go to state 45
+    FOR          shift, and go to state 46
+    CASE         shift, and go to state 47
+    ';'          shift, and go to state 48
+    '{'          shift, and go to state 21
+    '('          shift, and go to state 49
+    '!'          shift, and go to state 50
+
+    Blok                           go to state 51
+    Instrukcja                     go to state 168
+    WyrazeniePodstawowe            go to state 54
+    WyrazeniePostfiksowe           go to state 55
+    WyrazenieUnarne                go to state 56
+    OperatorUnarny                 go to state 57
+    WyrazenieMultiplikatywne       go to state 58
+    WyrazenieAddytywne             go to state 59
+    WyrazeniePorownania            go to state 60
+    WyrazenieLogiczne              go to state 61
+    Wyrazenie                      go to state 62
+    ZlozonaInstrukcja              go to state 63
+    InstrukcjaForAss               go to state 64
+    InstrukcjaForStart             go to state 65
+    InstrukcjaFor                  go to state 66
+    InstrukcjaCase                 go to state 67
+    InstrukcjaCaseStart            go to state 68
+    InstrukcjaCaseStartInstrukcja  go to state 69
+    InstrukcjaRepeat               go to state 70
+    InstrukcjaRepeatStart          go to state 71
+    InstrukcjaWhile                go to state 72
+    InstrukcjaWhileWyrazenie       go to state 73
+    InstrukcjaWhileStart           go to state 74
+    InstrukcjaIf                   go to state 75
+    IfWyrazenieInstrukcja          go to state 76
+    IfWyrazenie                    go to state 77
+    Ident                          go to state 78
+
+
+State 135
+
+   94 InstrukcjaCase: InstrukcjaCaseStartInstrukcja ELSE . Instrukcja
+
+    DELETE       shift, and go to state 28
+    IF           shift, and go to state 29
+    NEW          shift, and go to state 30
+    NULL_        shift, and go to state 31
+    READ         shift, and go to state 32
+    RETURN       shift, and go to state 33
+    SUPER        shift, and go to state 34
+    THIS         shift, and go to state 35
+    WHILE        shift, and go to state 36
+    WRITE        shift, and go to state 37
+    OPER_UMINUS  shift, and go to state 38
+    OPER_UPLUS   shift, and go to state 39
+    ID           shift, and go to state 16
+    INT_VAL      shift, and go to state 40
+    REAL_VAL     shift, and go to state 41
+    STRING_VAL   shift, and go to state 42
+    TRUE         shift, and go to state 43
+    FALSE        shift, and go to state 44
+    REPEAT       shift, and go to state 45
+    FOR          shift, and go to state 46
+    CASE         shift, and go to state 47
+    ';'          shift, and go to state 48
+    '{'          shift, and go to state 21
+    '('          shift, and go to state 49
+    '!'          shift, and go to state 50
+
+    Blok                           go to state 51
+    Instrukcja                     go to state 169
+    WyrazeniePodstawowe            go to state 54
+    WyrazeniePostfiksowe           go to state 55
+    WyrazenieUnarne                go to state 56
+    OperatorUnarny                 go to state 57
+    WyrazenieMultiplikatywne       go to state 58
+    WyrazenieAddytywne             go to state 59
+    WyrazeniePorownania            go to state 60
+    WyrazenieLogiczne              go to state 61
+    Wyrazenie                      go to state 62
+    ZlozonaInstrukcja              go to state 63
+    InstrukcjaForAss               go to state 64
+    InstrukcjaForStart             go to state 65
+    InstrukcjaFor                  go to state 66
+    InstrukcjaCase                 go to state 67
+    InstrukcjaCaseStart            go to state 68
+    InstrukcjaCaseStartInstrukcja  go to state 69
+    InstrukcjaRepeat               go to state 70
+    InstrukcjaRepeatStart          go to state 71
+    InstrukcjaWhile                go to state 72
+    InstrukcjaWhileWyrazenie       go to state 73
+    InstrukcjaWhileStart           go to state 74
+    InstrukcjaIf                   go to state 75
+    IfWyrazenieInstrukcja          go to state 76
+    IfWyrazenie                    go to state 77
+    Ident                          go to state 78
+
+
+State 136
+
+   97 InstrukcjaCaseStart: InstrukcjaCaseStartInstrukcja Wyrazenie .
+
+    $default  reduce using rule 97 (InstrukcjaCaseStart)
+
+
+State 137
+
+   99 InstrukcjaRepeat: InstrukcjaRepeatStart Instrukcja . UNTIL Wyrazenie
+
+    UNTIL  shift, and go to state 170
+
+
+State 138
+
+  101 InstrukcjaWhile: InstrukcjaWhileWyrazenie DO . Instrukcja DONE
+
+    DELETE       shift, and go to state 28
+    IF           shift, and go to state 29
+    NEW          shift, and go to state 30
+    NULL_        shift, and go to state 31
+    READ         shift, and go to state 32
+    RETURN       shift, and go to state 33
+    SUPER        shift, and go to state 34
+    THIS         shift, and go to state 35
+    WHILE        shift, and go to state 36
+    WRITE        shift, and go to state 37
+    OPER_UMINUS  shift, and go to state 38
+    OPER_UPLUS   shift, and go to state 39
+    ID           shift, and go to state 16
+    INT_VAL      shift, and go to state 40
+    REAL_VAL     shift, and go to state 41
+    STRING_VAL   shift, and go to state 42
+    TRUE         shift, and go to state 43
+    FALSE        shift, and go to state 44
+    REPEAT       shift, and go to state 45
+    FOR          shift, and go to state 46
+    CASE         shift, and go to state 47
+    ';'          shift, and go to state 48
+    '{'          shift, and go to state 21
+    '('          shift, and go to state 49
+    '!'          shift, and go to state 50
+
+    Blok                           go to state 51
+    Instrukcja                     go to state 171
+    WyrazeniePodstawowe            go to state 54
+    WyrazeniePostfiksowe           go to state 55
+    WyrazenieUnarne                go to state 56
+    OperatorUnarny                 go to state 57
+    WyrazenieMultiplikatywne       go to state 58
+    WyrazenieAddytywne             go to state 59
+    WyrazeniePorownania            go to state 60
+    WyrazenieLogiczne              go to state 61
+    Wyrazenie                      go to state 62
+    ZlozonaInstrukcja              go to state 63
+    InstrukcjaForAss               go to state 64
+    InstrukcjaForStart             go to state 65
+    InstrukcjaFor                  go to state 66
+    InstrukcjaCase                 go to state 67
+    InstrukcjaCaseStart            go to state 68
+    InstrukcjaCaseStartInstrukcja  go to state 69
+    InstrukcjaRepeat               go to state 70
+    InstrukcjaRepeatStart          go to state 71
+    InstrukcjaWhile                go to state 72
+    InstrukcjaWhileWyrazenie       go to state 73
+    InstrukcjaWhileStart           go to state 74
+    InstrukcjaIf                   go to state 75
+    IfWyrazenieInstrukcja          go to state 76
+    IfWyrazenie                    go to state 77
+    Ident                          go to state 78
+
+
+State 139
+
+  102 InstrukcjaWhileWyrazenie: InstrukcjaWhileStart Wyrazenie .
+
+    $default  reduce using rule 102 (InstrukcjaWhileWyrazenie)
+
+
+State 140
+
+  104 InstrukcjaIf: IfWyrazenieInstrukcja ELSE . Instrukcja ENDIF
+
+    DELETE       shift, and go to state 28
+    IF           shift, and go to state 29
+    NEW          shift, and go to state 30
+    NULL_        shift, and go to state 31
+    READ         shift, and go to state 32
+    RETURN       shift, and go to state 33
+    SUPER        shift, and go to state 34
+    THIS         shift, and go to state 35
+    WHILE        shift, and go to state 36
+    WRITE        shift, and go to state 37
+    OPER_UMINUS  shift, and go to state 38
+    OPER_UPLUS   shift, and go to state 39
+    ID           shift, and go to state 16
+    INT_VAL      shift, and go to state 40
+    REAL_VAL     shift, and go to state 41
+    STRING_VAL   shift, and go to state 42
+    TRUE         shift, and go to state 43
+    FALSE        shift, and go to state 44
+    REPEAT       shift, and go to state 45
+    FOR          shift, and go to state 46
+    CASE         shift, and go to state 47
+    ';'          shift, and go to state 48
+    '{'          shift, and go to state 21
+    '('          shift, and go to state 49
+    '!'          shift, and go to state 50
+
+    Blok                           go to state 51
+    Instrukcja                     go to state 172
+    WyrazeniePodstawowe            go to state 54
+    WyrazeniePostfiksowe           go to state 55
+    WyrazenieUnarne                go to state 56
+    OperatorUnarny                 go to state 57
+    WyrazenieMultiplikatywne       go to state 58
+    WyrazenieAddytywne             go to state 59
+    WyrazeniePorownania            go to state 60
+    WyrazenieLogiczne              go to state 61
+    Wyrazenie                      go to state 62
+    ZlozonaInstrukcja              go to state 63
+    InstrukcjaForAss               go to state 64
+    InstrukcjaForStart             go to state 65
+    InstrukcjaFor                  go to state 66
+    InstrukcjaCase                 go to state 67
+    InstrukcjaCaseStart            go to state 68
+    InstrukcjaCaseStartInstrukcja  go to state 69
+    InstrukcjaRepeat               go to state 70
+    InstrukcjaRepeatStart          go to state 71
+    InstrukcjaWhile                go to state 72
+    InstrukcjaWhileWyrazenie       go to state 73
+    InstrukcjaWhileStart           go to state 74
+    InstrukcjaIf                   go to state 75
+    IfWyrazenieInstrukcja          go to state 76
+    IfWyrazenie                    go to state 77
+    Ident                          go to state 78
+
+
+State 141
+
+  105 InstrukcjaIf: IfWyrazenie THEN . ListaInstrukcji ENDIF
+  106 IfWyrazenieInstrukcja: IfWyrazenie THEN . Instrukcja
+
+    DELETE       shift, and go to state 28
+    IF           shift, and go to state 29
+    NEW          shift, and go to state 30
+    NULL_        shift, and go to state 31
+    READ         shift, and go to state 32
+    RETURN       shift, and go to state 33
+    SUPER        shift, and go to state 34
+    THIS         shift, and go to state 35
+    WHILE        shift, and go to state 36
+    WRITE        shift, and go to state 37
+    OPER_UMINUS  shift, and go to state 38
+    OPER_UPLUS   shift, and go to state 39
+    ID           shift, and go to state 16
+    INT_VAL      shift, and go to state 40
+    REAL_VAL     shift, and go to state 41
+    STRING_VAL   shift, and go to state 42
+    TRUE         shift, and go to state 43
+    FALSE        shift, and go to state 44
+    REPEAT       shift, and go to state 45
+    FOR          shift, and go to state 46
+    CASE         shift, and go to state 47
+    ';'          shift, and go to state 48
+    '{'          shift, and go to state 21
+    '('          shift, and go to state 49
+    '!'          shift, and go to state 50
+
+    $default  reduce using rule 26 (ListaInstrukcji)
+
+    Blok                           go to state 51
+    ListaInstrukcji                go to state 173
+    Instrukcja                     go to state 174
+    WyrazeniePodstawowe            go to state 54
+    WyrazeniePostfiksowe           go to state 55
+    WyrazenieUnarne                go to state 56
+    OperatorUnarny                 go to state 57
+    WyrazenieMultiplikatywne       go to state 58
+    WyrazenieAddytywne             go to state 59
+    WyrazeniePorownania            go to state 60
+    WyrazenieLogiczne              go to state 61
+    Wyrazenie                      go to state 62
+    ZlozonaInstrukcja              go to state 63
+    InstrukcjaForAss               go to state 64
+    InstrukcjaForStart             go to state 65
+    InstrukcjaFor                  go to state 66
+    InstrukcjaCase                 go to state 67
+    InstrukcjaCaseStart            go to state 68
+    InstrukcjaCaseStartInstrukcja  go to state 69
+    InstrukcjaRepeat               go to state 70
+    InstrukcjaRepeatStart          go to state 71
+    InstrukcjaWhile                go to state 72
+    InstrukcjaWhileWyrazenie       go to state 73
+    InstrukcjaWhileStart           go to state 74
+    InstrukcjaIf                   go to state 75
+    IfWyrazenieInstrukcja          go to state 76
+    IfWyrazenie                    go to state 77
+    Ident                          go to state 78
+
+
+State 142
+
+  108 DeklaracjaKlasy: CLASS Ident EXTENDS Ident '{' . ListaDeklaracji '}'
+
+    CLASS     shift, and go to state 5
+    FUNCTION  shift, and go to state 6
+    TYPE      shift, and go to state 7
+    VAR       shift, and go to state 8
+
+    $default  reduce using rule 4 (ListaDeklaracji)
+
+    ListaDeklaracji     go to state 175
+    Deklaracja          go to state 11
+    DeklaracjaTypu      go to state 12
+    DeklaracjaZmiennej  go to state 13
+    DeklaracjaFunkcji   go to state 14
+    DeklaracjaKlasy     go to state 15
+
+
+State 143
+
+   15 ListaDeklaracjiZmiennej: DeklaracjaZmiennej ',' . ListaDeklaracjiZmiennej
+
+    VAR  shift, and go to state 8
+
+    ListaDeklaracjiZmiennej  go to state 176
+    DeklaracjaZmiennej       go to state 81
+
+
+State 144
+
+   23 DeklaracjaFunkcji: FUNCTION Ident '(' DeklaracjaArgumentow ')' . ':' Typ Cialo
+
+    ':'  shift, and go to state 177
+
+
+State 145
+
+   13 OpisTypu: ARRAY OF . Typ
+
+    INT      shift, and go to state 87
+    STRING   shift, and go to state 88
+    VOID     shift, and go to state 89
+    ID       shift, and go to state 16
+    REAL     shift, and go to state 90
+    BOOLEAN  shift, and go to state 91
+
+    Typ    go to state 178
+    Ident  go to state 93
+
+
+State 146
+
+   12 OpisTypu: '{' ListaDeklaracjiZmiennej . '}'
+
+    '}'  shift, and go to state 179
+
+
+State 147
+
+   32 Instrukcja: DELETE Wyrazenie ';' .
+
+    $default  reduce using rule 32 (Instrukcja)
+
+
+State 148
+
+   82 Wyrazenie: NEW Typ '[' . Wyrazenie ']'
+
+    NEW          shift, and go to state 30
+    NULL_        shift, and go to state 31
+    SUPER        shift, and go to state 34
+    THIS         shift, and go to state 35
+    OPER_UMINUS  shift, and go to state 38
+    OPER_UPLUS   shift, and go to state 39
+    ID           shift, and go to state 16
+    INT_VAL      shift, and go to state 40
+    REAL_VAL     shift, and go to state 41
+    STRING_VAL   shift, and go to state 42
+    TRUE         shift, and go to state 43
+    FALSE        shift, and go to state 44
+    '('          shift, and go to state 49
+    '!'          shift, and go to state 50
+
+    WyrazeniePodstawowe       go to state 54
+    WyrazeniePostfiksowe      go to state 94
+    WyrazenieUnarne           go to state 56
+    OperatorUnarny            go to state 57
+    WyrazenieMultiplikatywne  go to state 58
+    WyrazenieAddytywne        go to state 59
+    WyrazeniePorownania       go to state 60
+    WyrazenieLogiczne         go to state 61
+    Wyrazenie                 go to state 180
+    Ident                     go to state 78
+
+
+State 149
+
+   34 Instrukcja: READ Ident ';' .
+
+    $default  reduce using rule 34 (Instrukcja)
+
+
+State 150
+
+   36 Instrukcja: RETURN Wyrazenie ';' .
+
+    $default  reduce using rule 36 (Instrukcja)
+
+
+State 151
+
+   35 Instrukcja: WRITE Wyrazenie ';' .
+
+    $default  reduce using rule 35 (Instrukcja)
+
+
+State 152
+
+   89 InstrukcjaForAss: FOR InstrukcjaForId OPER_ASSIGN . Wyrazenie
+
+    NEW          shift, and go to state 30
+    NULL_        shift, and go to state 31
+    SUPER        shift, and go to state 34
+    THIS         shift, and go to state 35
+    OPER_UMINUS  shift, and go to state 38
+    OPER_UPLUS   shift, and go to state 39
+    ID           shift, and go to state 16
+    INT_VAL      shift, and go to state 40
+    REAL_VAL     shift, and go to state 41
+    STRING_VAL   shift, and go to state 42
+    TRUE         shift, and go to state 43
+    FALSE        shift, and go to state 44
+    '('          shift, and go to state 49
+    '!'          shift, and go to state 50
+
+    WyrazeniePodstawowe       go to state 54
+    WyrazeniePostfiksowe      go to state 94
+    WyrazenieUnarne           go to state 56
+    OperatorUnarny            go to state 57
+    WyrazenieMultiplikatywne  go to state 58
+    WyrazenieAddytywne        go to state 59
+    WyrazeniePorownania       go to state 60
+    WyrazenieLogiczne         go to state 61
+    Wyrazenie                 go to state 181
+    Ident                     go to state 78
+
+
+State 153
+
+   96 InstrukcjaCaseStart: CASE Ident OF . Wyrazenie
+
+    NEW          shift, and go to state 30
+    NULL_        shift, and go to state 31
+    SUPER        shift, and go to state 34
+    THIS         shift, and go to state 35
+    OPER_UMINUS  shift, and go to state 38
+    OPER_UPLUS   shift, and go to state 39
+    ID           shift, and go to state 16
+    INT_VAL      shift, and go to state 40
+    REAL_VAL     shift, and go to state 41
+    STRING_VAL   shift, and go to state 42
+    TRUE         shift, and go to state 43
+    FALSE        shift, and go to state 44
+    '('          shift, and go to state 49
+    '!'          shift, and go to state 50
+
+    WyrazeniePodstawowe       go to state 54
+    WyrazeniePostfiksowe      go to state 94
+    WyrazenieUnarne           go to state 56
+    OperatorUnarny            go to state 57
+    WyrazenieMultiplikatywne  go to state 58
+    WyrazenieAddytywne        go to state 59
+    WyrazeniePorownania       go to state 60
+    WyrazenieLogiczne         go to state 61
+    Wyrazenie                 go to state 182
+    Ident                     go to state 78
+
+
+State 154
+
+   44 WyrazeniePodstawowe: '(' Wyrazenie ')' .
+
+    $default  reduce using rule 44 (WyrazeniePodstawowe)
+
+
+State 155
+
+   30 Instrukcja: WyrazeniePostfiksowe OPER_ASSIGN Wyrazenie . ';'
+
+    ';'  shift, and go to state 183
+
+
+State 156
+
+   49 WyrazeniePostfiksowe: WyrazeniePostfiksowe '(' Parametry . ')'
+
+    ')'  shift, and go to state 184
+
+
+State 157
+
+   53 Parametry: ListaWyrazen .
+
+    $default  reduce using rule 53 (Parametry)
+
+
+State 158
+
+   54 ListaWyrazen: Wyrazenie .
+   55             | Wyrazenie . ',' ListaWyrazen
+
+    ','  shift, and go to state 185
+
+    $default  reduce using rule 54 (ListaWyrazen)
+
+
+State 159
+
+   48 WyrazeniePostfiksowe: WyrazeniePostfiksowe '[' Wyrazenie . ']'
+
+    ']'  shift, and go to state 186
+
+
+State 160
+
+   50 WyrazeniePostfiksowe: WyrazeniePostfiksowe '.' Ident .
+
+    $default  reduce using rule 50 (WyrazeniePostfiksowe)
+
+
+State 161
+
+   61 WyrazenieMultiplikatywne: WyrazenieMultiplikatywne OperatorMultiplikatywny WyrazenieUnarne .
+
+    $default  reduce using rule 61 (WyrazenieMultiplikatywne)
+
+
+State 162
+
+   61 WyrazenieMultiplikatywne: WyrazenieMultiplikatywne . OperatorMultiplikatywny WyrazenieUnarne
+   63 WyrazenieAddytywne: WyrazenieAddytywne OperatorAddytywny WyrazenieMultiplikatywne .
+
+    '*'  shift, and go to state 113
+    '/'  shift, and go to state 114
+
+    $default  reduce using rule 63 (WyrazenieAddytywne)
+
+    OperatorMultiplikatywny  go to state 115
+
+
+State 163
+
+   63 WyrazenieAddytywne: WyrazenieAddytywne . OperatorAddytywny WyrazenieMultiplikatywne
+   69 WyrazeniePorownania: WyrazenieAddytywne OperatorPorownania WyrazenieAddytywne .
+
+    '+'  shift, and go to state 122
+    '-'  shift, and go to state 123
+
+    $default  reduce using rule 69 (WyrazeniePorownania)
+
+    OperatorAddytywny  go to state 124
+
+
+State 164
+
+   78 WyrazenieLogiczne: WyrazeniePorownania OPER_AND WyrazeniePorownania .
+
+    $default  reduce using rule 78 (WyrazenieLogiczne)
+
+
+State 165
+
+   77 WyrazenieLogiczne: WyrazeniePorownania OPER_OR WyrazeniePorownania .
+
+    $default  reduce using rule 77 (WyrazenieLogiczne)
+
+
+State 166
+
+   92 InstrukcjaForStart: InstrukcjaForAss TO_DOWNTO Wyrazenie .
+
+    $default  reduce using rule 92 (InstrukcjaForStart)
+
+
+State 167
+
+   93 InstrukcjaFor: InstrukcjaForStart DO Instrukcja .
+
+    $default  reduce using rule 93 (InstrukcjaFor)
+
+
+State 168
+
+   98 InstrukcjaCaseStartInstrukcja: InstrukcjaCaseStart ':' Instrukcja .
+
+    $default  reduce using rule 98 (InstrukcjaCaseStartInstrukcja)
+
+
+State 169
+
+   94 InstrukcjaCase: InstrukcjaCaseStartInstrukcja ELSE Instrukcja .
+
+    $default  reduce using rule 94 (InstrukcjaCase)
+
+
+State 170
+
+   99 InstrukcjaRepeat: InstrukcjaRepeatStart Instrukcja UNTIL . Wyrazenie
+
+    NEW          shift, and go to state 30
+    NULL_        shift, and go to state 31
+    SUPER        shift, and go to state 34
+    THIS         shift, and go to state 35
+    OPER_UMINUS  shift, and go to state 38
+    OPER_UPLUS   shift, and go to state 39
+    ID           shift, and go to state 16
+    INT_VAL      shift, and go to state 40
+    REAL_VAL     shift, and go to state 41
+    STRING_VAL   shift, and go to state 42
+    TRUE         shift, and go to state 43
+    FALSE        shift, and go to state 44
+    '('          shift, and go to state 49
+    '!'          shift, and go to state 50
+
+    WyrazeniePodstawowe       go to state 54
+    WyrazeniePostfiksowe      go to state 94
+    WyrazenieUnarne           go to state 56
+    OperatorUnarny            go to state 57
+    WyrazenieMultiplikatywne  go to state 58
+    WyrazenieAddytywne        go to state 59
+    WyrazeniePorownania       go to state 60
+    WyrazenieLogiczne         go to state 61
+    Wyrazenie                 go to state 187
+    Ident                     go to state 78
+
+
+State 171
+
+  101 InstrukcjaWhile: InstrukcjaWhileWyrazenie DO Instrukcja . DONE
+
+    DONE  shift, and go to state 188
+
+
+State 172
+
+  104 InstrukcjaIf: IfWyrazenieInstrukcja ELSE Instrukcja . ENDIF
+
+    ENDIF  shift, and go to state 189
+
+
+State 173
+
+  105 InstrukcjaIf: IfWyrazenie THEN ListaInstrukcji . ENDIF
+
+    ENDIF  shift, and go to state 190
+
+
+State 174
+
+   27 ListaInstrukcji: Instrukcja . ListaInstrukcji
+  106 IfWyrazenieInstrukcja: IfWyrazenie THEN Instrukcja .
+
+    DELETE       shift, and go to state 28
+    IF           shift, and go to state 29
+    NEW          shift, and go to state 30
+    NULL_        shift, and go to state 31
+    READ         shift, and go to state 32
+    RETURN       shift, and go to state 33
+    SUPER        shift, and go to state 34
+    THIS         shift, and go to state 35
+    WHILE        shift, and go to state 36
+    WRITE        shift, and go to state 37
+    OPER_UMINUS  shift, and go to state 38
+    OPER_UPLUS   shift, and go to state 39
+    ID           shift, and go to state 16
+    INT_VAL      shift, and go to state 40
+    REAL_VAL     shift, and go to state 41
+    STRING_VAL   shift, and go to state 42
+    TRUE         shift, and go to state 43
+    FALSE        shift, and go to state 44
+    REPEAT       shift, and go to state 45
+    FOR          shift, and go to state 46
+    CASE         shift, and go to state 47
+    ';'          shift, and go to state 48
+    '{'          shift, and go to state 21
+    '('          shift, and go to state 49
+    '!'          shift, and go to state 50
+
+    ELSE      reduce using rule 106 (IfWyrazenieInstrukcja)
+    $default  reduce using rule 26 (ListaInstrukcji)
+
+    Blok                           go to state 51
+    ListaInstrukcji                go to state 107
+    Instrukcja                     go to state 53
+    WyrazeniePodstawowe            go to state 54
+    WyrazeniePostfiksowe           go to state 55
+    WyrazenieUnarne                go to state 56
+    OperatorUnarny                 go to state 57
+    WyrazenieMultiplikatywne       go to state 58
+    WyrazenieAddytywne             go to state 59
+    WyrazeniePorownania            go to state 60
+    WyrazenieLogiczne              go to state 61
+    Wyrazenie                      go to state 62
+    ZlozonaInstrukcja              go to state 63
+    InstrukcjaForAss               go to state 64
+    InstrukcjaForStart             go to state 65
+    InstrukcjaFor                  go to state 66
+    InstrukcjaCase                 go to state 67
+    InstrukcjaCaseStart            go to state 68
+    InstrukcjaCaseStartInstrukcja  go to state 69
+    InstrukcjaRepeat               go to state 70
+    InstrukcjaRepeatStart          go to state 71
+    InstrukcjaWhile                go to state 72
+    InstrukcjaWhileWyrazenie       go to state 73
+    InstrukcjaWhileStart           go to state 74
+    InstrukcjaIf                   go to state 75
+    IfWyrazenieInstrukcja          go to state 76
+    IfWyrazenie                    go to state 77
+    Ident                          go to state 78
+
+
+State 175
+
+  108 DeklaracjaKlasy: CLASS Ident EXTENDS Ident '{' ListaDeklaracji . '}'
+
+    '}'  shift, and go to state 191
+
+
+State 176
+
+   15 ListaDeklaracjiZmiennej: DeklaracjaZmiennej ',' ListaDeklaracjiZmiennej .
+
+    $default  reduce using rule 15 (ListaDeklaracjiZmiennej)
+
+
+State 177
+
+   23 DeklaracjaFunkcji: FUNCTION Ident '(' DeklaracjaArgumentow ')' ':' . Typ Cialo
+
+    INT      shift, and go to state 87
+    STRING   shift, and go to state 88
+    VOID     shift, and go to state 89
+    ID       shift, and go to state 16
+    REAL     shift, and go to state 90
+    BOOLEAN  shift, and go to state 91
+
+    Typ    go to state 192
+    Ident  go to state 93
+
+
+State 178
+
+   13 OpisTypu: ARRAY OF Typ .
+
+    $default  reduce using rule 13 (OpisTypu)
+
+
+State 179
+
+   12 OpisTypu: '{' ListaDeklaracjiZmiennej '}' .
+
+    $default  reduce using rule 12 (OpisTypu)
+
+
+State 180
+
+   82 Wyrazenie: NEW Typ '[' Wyrazenie . ']'
+
+    ']'  shift, and go to state 193
+
+
+State 181
+
+   89 InstrukcjaForAss: FOR InstrukcjaForId OPER_ASSIGN Wyrazenie .
+
+    $default  reduce using rule 89 (InstrukcjaForAss)
+
+
+State 182
+
+   96 InstrukcjaCaseStart: CASE Ident OF Wyrazenie .
+
+    $default  reduce using rule 96 (InstrukcjaCaseStart)
+
+
+State 183
+
+   30 Instrukcja: WyrazeniePostfiksowe OPER_ASSIGN Wyrazenie ';' .
+
+    $default  reduce using rule 30 (Instrukcja)
+
+
+State 184
+
+   49 WyrazeniePostfiksowe: WyrazeniePostfiksowe '(' Parametry ')' .
+
+    $default  reduce using rule 49 (WyrazeniePostfiksowe)
+
+
+State 185
+
+   55 ListaWyrazen: Wyrazenie ',' . ListaWyrazen
+
+    NEW          shift, and go to state 30
+    NULL_        shift, and go to state 31
+    SUPER        shift, and go to state 34
+    THIS         shift, and go to state 35
+    OPER_UMINUS  shift, and go to state 38
+    OPER_UPLUS   shift, and go to state 39
+    ID           shift, and go to state 16
+    INT_VAL      shift, and go to state 40
+    REAL_VAL     shift, and go to state 41
+    STRING_VAL   shift, and go to state 42
+    TRUE         shift, and go to state 43
+    FALSE        shift, and go to state 44
+    '('          shift, and go to state 49
+    '!'          shift, and go to state 50
+
+    WyrazeniePodstawowe       go to state 54
+    WyrazeniePostfiksowe      go to state 94
+    ListaWyrazen              go to state 194
+    WyrazenieUnarne           go to state 56
+    OperatorUnarny            go to state 57
+    WyrazenieMultiplikatywne  go to state 58
+    WyrazenieAddytywne        go to state 59
+    WyrazeniePorownania       go to state 60
+    WyrazenieLogiczne         go to state 61
+    Wyrazenie                 go to state 158
+    Ident                     go to state 78
+
+
+State 186
+
+   48 WyrazeniePostfiksowe: WyrazeniePostfiksowe '[' Wyrazenie ']' .
+
+    $default  reduce using rule 48 (WyrazeniePostfiksowe)
+
+
+State 187
+
+   99 InstrukcjaRepeat: InstrukcjaRepeatStart Instrukcja UNTIL Wyrazenie .
+
+    $default  reduce using rule 99 (InstrukcjaRepeat)
+
+
+State 188
+
+  101 InstrukcjaWhile: InstrukcjaWhileWyrazenie DO Instrukcja DONE .
+
+    $default  reduce using rule 101 (InstrukcjaWhile)
+
+
+State 189
+
+  104 InstrukcjaIf: IfWyrazenieInstrukcja ELSE Instrukcja ENDIF .
+
+    $default  reduce using rule 104 (InstrukcjaIf)
+
+
+State 190
+
+  105 InstrukcjaIf: IfWyrazenie THEN ListaInstrukcji ENDIF .
+
+    $default  reduce using rule 105 (InstrukcjaIf)
+
+
+State 191
+
+  108 DeklaracjaKlasy: CLASS Ident EXTENDS Ident '{' ListaDeklaracji '}' .
+
+    $default  reduce using rule 108 (DeklaracjaKlasy)
+
+
+State 192
+
+   23 DeklaracjaFunkcji: FUNCTION Ident '(' DeklaracjaArgumentow ')' ':' Typ . Cialo
+
+    CLASS     shift, and go to state 5
+    FUNCTION  shift, and go to state 6
+    TYPE      shift, and go to state 7
+    VAR       shift, and go to state 8
+
+    $default  reduce using rule 4 (ListaDeklaracji)
+
+    Cialo               go to state 195
+    ListaDeklaracji     go to state 10
+    Deklaracja          go to state 11
+    DeklaracjaTypu      go to state 12
+    DeklaracjaZmiennej  go to state 13
+    DeklaracjaFunkcji   go to state 14
+    DeklaracjaKlasy     go to state 15
+
+
+State 193
+
+   82 Wyrazenie: NEW Typ '[' Wyrazenie ']' .
+
+    $default  reduce using rule 82 (Wyrazenie)
+
+
+State 194
+
+   55 ListaWyrazen: Wyrazenie ',' ListaWyrazen .
+
+    $default  reduce using rule 55 (ListaWyrazen)
+
+
+State 195
+
+   23 DeklaracjaFunkcji: FUNCTION Ident '(' DeklaracjaArgumentow ')' ':' Typ Cialo .
+
+    $default  reduce using rule 23 (DeklaracjaFunkcji)

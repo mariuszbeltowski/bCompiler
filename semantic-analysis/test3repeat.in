@@ -1,0 +1,9 @@
+program;
+var tmp: int
+{
+  tmp := 4;
+
+  repeat
+    tmp := tmp - 1;
+  until tmp > 0;
+}

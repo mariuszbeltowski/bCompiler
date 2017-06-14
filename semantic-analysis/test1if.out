@@ -1,0 +1,276 @@
+token: program
+token: ;
+Line: 0
+
+token: var
+token: ID ("x")
+Ident -> Identyfikator 
+token: :
+token: boolean
+Typ -> boolean 
+DeklaracjaZmiennej -> var Ident : Typ 
+Deklaracja -> DeklaracjaZmiennej 
+Line: 1
+
+token: var
+token: ID ("tmp")
+Ident -> Identyfikator 
+token: :
+token: string
+Typ -> string 
+DeklaracjaZmiennej -> var Ident : Typ 
+Deklaracja -> DeklaracjaZmiennej 
+Line: 2
+
+token: var
+token: ID ("num")
+Ident -> Identyfikator 
+token: :
+token: int
+Typ -> int 
+DeklaracjaZmiennej -> var Ident : Typ 
+Deklaracja -> DeklaracjaZmiennej 
+Line: 3
+
+token: var
+token: ID ("num2")
+Ident -> Identyfikator 
+token: :
+token: real
+Typ -> real 
+DeklaracjaZmiennej -> var Ident : Typ 
+Deklaracja -> DeklaracjaZmiennej 
+Line: 4
+
+token: {
+ListaDeklaracji -> slowo puste 
+ListaDeklaracji -> Deklaracja ListaDeklaracji 
+ListaDeklaracji -> Deklaracja ListaDeklaracji 
+ListaDeklaracji -> Deklaracja ListaDeklaracji 
+ListaDeklaracji -> Deklaracja ListaDeklaracji 
+Line: 5
+
+token: ID ("x")
+Ident -> Identyfikator 
+WyrazeniePodstawowe -> Ident 
+WyrazeniePostfiksowe -> WyrazeniePodstawowe 
+Podstawowe typ: 0, 2, 4
+Typ: x, 5
+token: :=
+token: true
+WyrazeniePodstawowe -> TRUE 
+WyrazeniePostfiksowe -> WyrazeniePodstawowe 
+Podstawowe typ: 5, 2, 4
+Typ: true, 5
+token: ;
+WyrazenieUnarne -> WyrazeniePostfiksowe
+ WyrazenieMultiplikatywne -> WyrazenieUnarne 
+WyrazenieAddytywne -> WyrazenieMultiplikatywne 
+WyrazeniePorownania -> WyrazenieAddytywne 
+Wyrazenielogiczne -> WyrazeniePorownania 
+Wyrazenie -> Wyrazenielogiczne 
+Instrukcja -> WyrazeniePostfiksowe := Wyrazenie ; 
+Line: 6
+
+Line: 7
+
+token: if
+token: ID ("x")
+Ident -> Identyfikator 
+WyrazeniePodstawowe -> Ident 
+WyrazeniePostfiksowe -> WyrazeniePodstawowe 
+Podstawowe typ: 0, 2, 4
+Typ: x, 5
+token: ==
+WyrazenieUnarne -> WyrazeniePostfiksowe
+ WyrazenieMultiplikatywne -> WyrazenieUnarne 
+WyrazenieAddytywne -> WyrazenieMultiplikatywne 
+OperatorPorownania -> == 
+token: true
+WyrazeniePodstawowe -> TRUE 
+WyrazeniePostfiksowe -> WyrazeniePodstawowe 
+Podstawowe typ: 5, 2, 4
+Typ: true, 5
+token: then
+WyrazenieUnarne -> WyrazeniePostfiksowe
+ WyrazenieMultiplikatywne -> WyrazenieUnarne 
+WyrazenieAddytywne -> WyrazenieMultiplikatywne 
+WyrazeniePorownania -> Wyrazenieaddytywne OperatorPorownania WyrazenieAddytywne 
+Wyrazenielogiczne -> WyrazeniePorownania 
+Wyrazenie -> Wyrazenielogiczne 
+IfWyrazenie -> if Wyrazenie 
+Line: 8
+
+token: ID ("x")
+Ident -> Identyfikator 
+WyrazeniePodstawowe -> Ident 
+WyrazeniePostfiksowe -> WyrazeniePodstawowe 
+Podstawowe typ: 0, 2, 4
+Typ: x, 5
+token: :=
+token: !
+OperatorUnarny -> ! 
+token: false
+WyrazeniePodstawowe -> FALSE 
+WyrazeniePostfiksowe -> WyrazeniePodstawowe 
+Podstawowe typ: 5, 2, 4
+Typ: false, 5
+token: ;
+WyrazenieUnarne -> WyrazeniePostfiksowe
+WyrazenieUnarne -> OperatorUnarny WyrazenieUnarne 
+typ unarny: 5, 2, 4 WyrazenieMultiplikatywne -> WyrazenieUnarne 
+WyrazenieAddytywne -> WyrazenieMultiplikatywne 
+WyrazeniePorownania -> WyrazenieAddytywne 
+Wyrazenielogiczne -> WyrazeniePorownania 
+Wyrazenie -> Wyrazenielogiczne 
+Instrukcja -> WyrazeniePostfiksowe := Wyrazenie ; 
+Line: 9
+
+token: else
+IfWyrazenieInstrukcja -> IfWyrazenie then Instrukcja 
+Line: 10
+
+token: ID ("x")
+Ident -> Identyfikator 
+WyrazeniePodstawowe -> Ident 
+WyrazeniePostfiksowe -> WyrazeniePodstawowe 
+Podstawowe typ: 0, 2, 4
+Typ: x, 5
+token: :=
+token: true
+WyrazeniePodstawowe -> TRUE 
+WyrazeniePostfiksowe -> WyrazeniePodstawowe 
+Podstawowe typ: 5, 2, 4
+Typ: true, 5
+token: ;
+WyrazenieUnarne -> WyrazeniePostfiksowe
+ WyrazenieMultiplikatywne -> WyrazenieUnarne 
+WyrazenieAddytywne -> WyrazenieMultiplikatywne 
+WyrazeniePorownania -> WyrazenieAddytywne 
+Wyrazenielogiczne -> WyrazeniePorownania 
+Wyrazenie -> Wyrazenielogiczne 
+Instrukcja -> WyrazeniePostfiksowe := Wyrazenie ; 
+Line: 11
+
+token: endif
+InstrukcjaIf -> IfWyrazenieInstrukcja ELSE Instrukcja ENDIF 
+token: ;
+Instrukcja -> ZlozonaInstrukcja ; 
+Line: 12
+
+Line: 13
+
+token: if
+token: ID ("x")
+Ident -> Identyfikator 
+WyrazeniePodstawowe -> Ident 
+WyrazeniePostfiksowe -> WyrazeniePodstawowe 
+Podstawowe typ: 0, 2, 4
+Typ: x, 5
+token: ==
+WyrazenieUnarne -> WyrazeniePostfiksowe
+ WyrazenieMultiplikatywne -> WyrazenieUnarne 
+WyrazenieAddytywne -> WyrazenieMultiplikatywne 
+OperatorPorownania -> == 
+token: false
+WyrazeniePodstawowe -> FALSE 
+WyrazeniePostfiksowe -> WyrazeniePodstawowe 
+Podstawowe typ: 5, 2, 4
+Typ: false, 5
+token: then
+WyrazenieUnarne -> WyrazeniePostfiksowe
+ WyrazenieMultiplikatywne -> WyrazenieUnarne 
+WyrazenieAddytywne -> WyrazenieMultiplikatywne 
+WyrazeniePorownania -> Wyrazenieaddytywne OperatorPorownania WyrazenieAddytywne 
+Wyrazenielogiczne -> WyrazeniePorownania 
+Wyrazenie -> Wyrazenielogiczne 
+IfWyrazenie -> if Wyrazenie 
+Line: 14
+
+token: ID ("num")
+Ident -> Identyfikator 
+WyrazeniePodstawowe -> Ident 
+WyrazeniePostfiksowe -> WyrazeniePodstawowe 
+Podstawowe typ: 0, 2, 4
+Typ: num, 2
+token: :=
+token: ID ("num")
+Ident -> Identyfikator 
+WyrazeniePodstawowe -> Ident 
+WyrazeniePostfiksowe -> WyrazeniePodstawowe 
+Podstawowe typ: 0, 2, 4
+Typ: num, 2
+token: *
+WyrazenieUnarne -> WyrazeniePostfiksowe
+ WyrazenieMultiplikatywne -> WyrazenieUnarne 
+OperatorMultiplikatywny -> * 
+token: ID ("num")
+Ident -> Identyfikator 
+WyrazeniePodstawowe -> Ident 
+WyrazeniePostfiksowe -> WyrazeniePodstawowe 
+Podstawowe typ: 0, 2, 4
+Typ: num, 2
+token: ;
+WyrazenieUnarne -> WyrazeniePostfiksowe
+WyrazenieMultiplikatywne -> WyrazenieMultiplikatywne OperatorMultiplikatywny WyrazenieUnarne 
+tpyyy 2, 2, real2, int4WyrazenieAddytywne -> WyrazenieMultiplikatywne 
+WyrazeniePorownania -> WyrazenieAddytywne 
+Wyrazenielogiczne -> WyrazeniePorownania 
+Wyrazenie -> Wyrazenielogiczne 
+Instrukcja -> WyrazeniePostfiksowe := Wyrazenie ; 
+Line: 15
+
+token: ID ("num2")
+Ident -> Identyfikator 
+WyrazeniePodstawowe -> Ident 
+WyrazeniePostfiksowe -> WyrazeniePodstawowe 
+Podstawowe typ: 0, 2, 4
+Typ: num2, 4
+token: :=
+token: ID ("num2")
+Ident -> Identyfikator 
+WyrazeniePodstawowe -> Ident 
+WyrazeniePostfiksowe -> WyrazeniePodstawowe 
+Podstawowe typ: 0, 2, 4
+Typ: num2, 4
+token: +
+WyrazenieUnarne -> WyrazeniePostfiksowe
+ WyrazenieMultiplikatywne -> WyrazenieUnarne 
+WyrazenieAddytywne -> WyrazenieMultiplikatywne 
+OperatorAddytywny -> + 
+token: ID ("num")
+Ident -> Identyfikator 
+WyrazeniePodstawowe -> Ident 
+WyrazeniePostfiksowe -> WyrazeniePodstawowe 
+Podstawowe typ: 0, 2, 4
+Typ: num, 2
+token: ;
+WyrazenieUnarne -> WyrazeniePostfiksowe
+ WyrazenieMultiplikatywne -> WyrazenieUnarne 
+WyrazenieAddytywne -> WyrazenieAddytywne OperatorAddytywny WyrazenieMultiplikatywne 
+WyrazeniePorownania -> WyrazenieAddytywne 
+Wyrazenielogiczne -> WyrazeniePorownania 
+Wyrazenie -> Wyrazenielogiczne 
+Instrukcja -> WyrazeniePostfiksowe := Wyrazenie ; 
+Line: 16
+
+token: endif
+ListaInstrukcji -> Slowo puste 
+ListaInstrukcji -> Instrukcja ListaInstrukcji 
+ListaInstrukcji -> Instrukcja ListaInstrukcji 
+InstrukcjaIf -> IfWyrazenie ELSE Instrukcja ENDIF 
+token: ;
+Instrukcja -> ZlozonaInstrukcja ; 
+Line: 17
+
+token: }
+ListaInstrukcji -> Slowo puste 
+ListaInstrukcji -> Instrukcja ListaInstrukcji 
+ListaInstrukcji -> Instrukcja ListaInstrukcji 
+ListaInstrukcji -> Instrukcja ListaInstrukcji 
+Blok -> { ListaInstrukcji } 
+Cialo -> ListaDeklaracji Blok 
+prog -> program ; Cialo 
+Line: 18
+
+***EOF

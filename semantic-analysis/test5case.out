@@ -1,0 +1,152 @@
+token: program
+token: ;
+Line: 0
+
+token: var
+token: ID ("tmp")
+Ident -> Identyfikator 
+token: :
+token: int
+Typ -> int 
+DeklaracjaZmiennej -> var Ident : Typ 
+Deklaracja -> DeklaracjaZmiennej 
+Line: 1
+
+token: {
+ListaDeklaracji -> slowo puste 
+ListaDeklaracji -> Deklaracja ListaDeklaracji 
+Line: 2
+
+token: ID ("tmp")
+Ident -> Identyfikator 
+WyrazeniePodstawowe -> Ident 
+WyrazeniePostfiksowe -> WyrazeniePodstawowe 
+Podstawowe typ: 0, 2, 4
+Typ: tmp, 2
+token: :=
+token: INT_VAL (4)
+WyrazeniePodstawowe -> INT_VAL 0
+WyrazeniePostfiksowe -> WyrazeniePodstawowe 
+Podstawowe typ: 2, 2, 4
+Typ: 4, 2
+token: ;
+WyrazenieUnarne -> WyrazeniePostfiksowe
+ WyrazenieMultiplikatywne -> WyrazenieUnarne 
+WyrazenieAddytywne -> WyrazenieMultiplikatywne 
+WyrazeniePorownania -> WyrazenieAddytywne 
+Wyrazenielogiczne -> WyrazeniePorownania 
+Wyrazenie -> Wyrazenielogiczne 
+Instrukcja -> WyrazeniePostfiksowe := Wyrazenie ; 
+Line: 3
+
+Line: 4
+
+token: case
+token: ID ("tmp")
+Ident -> Identyfikator 
+token: of
+Line: 5
+
+token: INT_VAL (4)
+WyrazeniePodstawowe -> INT_VAL 0
+WyrazeniePostfiksowe -> WyrazeniePodstawowe 
+Podstawowe typ: 2, 2, 4
+Typ: 4, 2
+token: :
+WyrazenieUnarne -> WyrazeniePostfiksowe
+ WyrazenieMultiplikatywne -> WyrazenieUnarne 
+WyrazenieAddytywne -> WyrazenieMultiplikatywne 
+WyrazeniePorownania -> WyrazenieAddytywne 
+Wyrazenielogiczne -> WyrazeniePorownania 
+Wyrazenie -> Wyrazenielogiczne 
+InstrukcjaCaseStart -> case Ident of Wyrazenie
+Line: 6
+
+token: read
+token: ID ("tmp")
+Ident -> Identyfikator 
+token: ;
+Instrukcja -> read Ident  ; 
+InstrukcjaCaseStartInstrukcja -> InstrukcjaCaseStart : Instrukcja
+Line: 7
+
+token: INT_VAL (5)
+WyrazeniePodstawowe -> INT_VAL 0
+WyrazeniePostfiksowe -> WyrazeniePodstawowe 
+Podstawowe typ: 2, 2, 4
+Typ: 5, 2
+token: :
+WyrazenieUnarne -> WyrazeniePostfiksowe
+ WyrazenieMultiplikatywne -> WyrazenieUnarne 
+WyrazenieAddytywne -> WyrazenieMultiplikatywne 
+WyrazeniePorownania -> WyrazenieAddytywne 
+Wyrazenielogiczne -> WyrazeniePorownania 
+Wyrazenie -> Wyrazenielogiczne 
+InstrukcjaCaseStart -> InstrukcjaCaseStartInstrukcja Wyrazenie
+Line: 8
+
+token: write
+token: ID ("tmp")
+Ident -> Identyfikator 
+WyrazeniePodstawowe -> Ident 
+WyrazeniePostfiksowe -> WyrazeniePodstawowe 
+Podstawowe typ: 0, 2, 4
+Typ: tmp, 2
+token: ;
+WyrazenieUnarne -> WyrazeniePostfiksowe
+ WyrazenieMultiplikatywne -> WyrazenieUnarne 
+WyrazenieAddytywne -> WyrazenieMultiplikatywne 
+WyrazeniePorownania -> WyrazenieAddytywne 
+Wyrazenielogiczne -> WyrazeniePorownania 
+Wyrazenie -> Wyrazenielogiczne 
+Instrukcja -> write Wyrazenie ; 
+InstrukcjaCaseStartInstrukcja -> InstrukcjaCaseStart : Instrukcja
+Line: 9
+
+token: INT_VAL (6)
+WyrazeniePodstawowe -> INT_VAL 0
+WyrazeniePostfiksowe -> WyrazeniePodstawowe 
+Podstawowe typ: 2, 2, 4
+Typ: 6, 2
+token: :
+WyrazenieUnarne -> WyrazeniePostfiksowe
+ WyrazenieMultiplikatywne -> WyrazenieUnarne 
+WyrazenieAddytywne -> WyrazenieMultiplikatywne 
+WyrazeniePorownania -> WyrazenieAddytywne 
+Wyrazenielogiczne -> WyrazeniePorownania 
+Wyrazenie -> Wyrazenielogiczne 
+InstrukcjaCaseStart -> InstrukcjaCaseStartInstrukcja Wyrazenie
+Line: 10
+
+token: write
+token: INT_VAL (6)
+WyrazeniePodstawowe -> INT_VAL 0
+WyrazeniePostfiksowe -> WyrazeniePodstawowe 
+Podstawowe typ: 2, 2, 4
+Typ: 6, 2
+token: ;
+WyrazenieUnarne -> WyrazeniePostfiksowe
+ WyrazenieMultiplikatywne -> WyrazenieUnarne 
+WyrazenieAddytywne -> WyrazenieMultiplikatywne 
+WyrazeniePorownania -> WyrazenieAddytywne 
+Wyrazenielogiczne -> WyrazeniePorownania 
+Wyrazenie -> Wyrazenielogiczne 
+Instrukcja -> write Wyrazenie ; 
+InstrukcjaCaseStartInstrukcja -> InstrukcjaCaseStart : Instrukcja
+Line: 11
+
+token: ;
+InstrukcjaCase -> InstrukcjaCaseStartInstrukcja 
+Instrukcja -> ZlozonaInstrukcja ; 
+Line: 12
+
+token: }
+ListaInstrukcji -> Slowo puste 
+ListaInstrukcji -> Instrukcja ListaInstrukcji 
+ListaInstrukcji -> Instrukcja ListaInstrukcji 
+Blok -> { ListaInstrukcji } 
+Cialo -> ListaDeklaracji Blok 
+prog -> program ; Cialo 
+Line: 13
+
+***EOF

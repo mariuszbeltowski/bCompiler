@@ -1,0 +1,109 @@
+token: program
+token: ;
+Line: 0
+
+token: var
+token: ID ("tmp")
+Ident -> Identyfikator 
+token: :
+token: real
+Typ -> real 
+DeklaracjaZmiennej -> var Ident : Typ 
+Deklaracja -> DeklaracjaZmiennej 
+Line: 1
+
+token: {
+ListaDeklaracji -> slowo puste 
+ListaDeklaracji -> Deklaracja ListaDeklaracji 
+Line: 2
+
+token: ID ("tmp")
+Ident -> Identyfikator 
+WyrazeniePodstawowe -> Ident 
+WyrazeniePostfiksowe -> WyrazeniePodstawowe 
+Podstawowe typ: 0, 2, 4
+Typ: tmp, 4
+token: :=
+token: INT_VAL (8)
+WyrazeniePodstawowe -> INT_VAL 0
+WyrazeniePostfiksowe -> WyrazeniePodstawowe 
+Podstawowe typ: 2, 2, 4
+Typ: 8, 2
+token: ;
+WyrazenieUnarne -> WyrazeniePostfiksowe
+ WyrazenieMultiplikatywne -> WyrazenieUnarne 
+WyrazenieAddytywne -> WyrazenieMultiplikatywne 
+WyrazeniePorownania -> WyrazenieAddytywne 
+Wyrazenielogiczne -> WyrazeniePorownania 
+Wyrazenie -> Wyrazenielogiczne 
+Instrukcja -> WyrazeniePostfiksowe := Wyrazenie ; 
+Line: 3
+
+Line: 4
+
+token: while
+InstrukcjaWhileStart -> while 
+token: ID ("tmp")
+Ident -> Identyfikator 
+WyrazeniePodstawowe -> Ident 
+WyrazeniePostfiksowe -> WyrazeniePodstawowe 
+Podstawowe typ: 0, 2, 4
+Typ: tmp, 4
+token: ==
+WyrazenieUnarne -> WyrazeniePostfiksowe
+ WyrazenieMultiplikatywne -> WyrazenieUnarne 
+WyrazenieAddytywne -> WyrazenieMultiplikatywne 
+OperatorPorownania -> == 
+token: INT_VAL (4)
+WyrazeniePodstawowe -> INT_VAL 0
+WyrazeniePostfiksowe -> WyrazeniePodstawowe 
+Podstawowe typ: 2, 2, 4
+Typ: 4, 2
+token: do
+WyrazenieUnarne -> WyrazeniePostfiksowe
+ WyrazenieMultiplikatywne -> WyrazenieUnarne 
+WyrazenieAddytywne -> WyrazenieMultiplikatywne 
+WyrazeniePorownania -> Wyrazenieaddytywne OperatorPorownania WyrazenieAddytywne 
+Wyrazenielogiczne -> WyrazeniePorownania 
+Wyrazenie -> Wyrazenielogiczne 
+InstrukcjaWhileWyrazenie -> InstrukcjaWhileStart Wyrazenie 
+Line: 5
+
+token: ID ("tmp")
+Ident -> Identyfikator 
+WyrazeniePodstawowe -> Ident 
+WyrazeniePostfiksowe -> WyrazeniePodstawowe 
+Podstawowe typ: 0, 2, 4
+Typ: tmp, 4
+token: :=
+token: true
+WyrazeniePodstawowe -> TRUE 
+WyrazeniePostfiksowe -> WyrazeniePodstawowe 
+Podstawowe typ: 5, 2, 4
+Typ: true, 5
+token: ;
+WyrazenieUnarne -> WyrazeniePostfiksowe
+ WyrazenieMultiplikatywne -> WyrazenieUnarne 
+WyrazenieAddytywne -> WyrazenieMultiplikatywne 
+WyrazeniePorownania -> WyrazenieAddytywne 
+Wyrazenielogiczne -> WyrazeniePorownania 
+Wyrazenie -> Wyrazenielogiczne 
+Instrukcja -> WyrazeniePostfiksowe := Wyrazenie ; 
+Line: 6
+
+token: done
+InstrukcjaWhile -> InstrukcjaWhileWyrazenie do Instrukcja done 
+token: ;
+Instrukcja -> ZlozonaInstrukcja ; 
+Line: 7
+
+token: }
+ListaInstrukcji -> Slowo puste 
+ListaInstrukcji -> Instrukcja ListaInstrukcji 
+ListaInstrukcji -> Instrukcja ListaInstrukcji 
+Blok -> { ListaInstrukcji } 
+Cialo -> ListaDeklaracji Blok 
+prog -> program ; Cialo 
+Line: 8
+
+***EOF
